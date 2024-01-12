@@ -9,6 +9,16 @@ package chess;
 public class ChessBoard {
 
     public ChessBoard() {
+        char[][] board = new char[8][8];
+
+        for (char[] row : board) {
+            for (char value : row) {
+                System.out.print(value);
+            }
+            System.out.println();
+        }
+
+
         
     }
 
