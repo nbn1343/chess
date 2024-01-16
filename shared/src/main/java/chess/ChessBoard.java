@@ -29,7 +29,12 @@ public class ChessBoard {
      * @param piece    the piece to add
      */
     public void addPiece(ChessPosition position, ChessPiece piece) {
-        throw new RuntimeException("Not implemented");
+        int row = position.getRow ();
+        int col = position.getColumn ();
+
+        if (row >= 0 && row < 8 && col >=0 && col < 8) {
+
+        }
     }
 
     /**
