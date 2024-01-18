@@ -69,41 +69,82 @@ public class ChessPiece {
         //Checking upper right diagonal
         while (isValidPosition(myPosition.getRow () + counter, myPosition.getColumn () + counter)) {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + counter,myPosition.getColumn () + counter),null);
-            System.out.println ("====");
-            bishopMoves.add(moves);
-            System.out.println (moves);
-            counter += 1;
+            ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () + counter,myPosition.getColumn () + counter));
+            ChessPiece currentPiece = board.getPiece (myPosition);
+            System.out.println (nextPiece);
+            if (nextPiece == null) {
+                System.out.println ("====");
+                bishopMoves.add(moves);
+                System.out.println (moves);
+                counter += 1;
+            } else if (nextPiece.pieceColor != currentPiece.pieceColor){
+                bishopMoves.add(moves);
+                System.out.println (moves);
+                break;
+            } else {
+                break;
+            }
         }
         counter = 1;
         //Checking lower right diagonal
         while (isValidPosition(myPosition.getRow () - counter, myPosition.getColumn () + counter)) {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - counter, myPosition.getColumn () + counter), null);
-            System.out.println ("====");
-            bishopMoves.add (moves);
-            System.out.println (moves);
-            counter += 1;
+            ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () - counter,myPosition.getColumn () + counter));
+            ChessPiece currentPiece = board.getPiece (myPosition);
+            System.out.println (nextPiece);
+            if (nextPiece == null) {
+                System.out.println ("====");
+                bishopMoves.add(moves);
+                System.out.println (moves);
+                counter += 1;
+            } else if (nextPiece.pieceColor != currentPiece.pieceColor){
+                bishopMoves.add(moves);
+                System.out.println (moves);
+                break;
+            } else {
+                break;
+            }
         }
         counter = 1;
         //Checking lower left diagonal
         while (isValidPosition(myPosition.getRow () - counter, myPosition.getColumn () - counter)) {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - counter, myPosition.getColumn () - counter), null);
-            System.out.println ("====");
-            bishopMoves.add (moves);
-            System.out.println (moves);
-            counter += 1;
+            ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () - counter,myPosition.getColumn () - counter));
+            ChessPiece currentPiece = board.getPiece (myPosition);
+            System.out.println (nextPiece);
+            if (nextPiece == null) {
+                System.out.println ("====");
+                bishopMoves.add(moves);
+                System.out.println (moves);
+                counter += 1;
+            } else if (nextPiece.pieceColor != currentPiece.pieceColor){
+                bishopMoves.add(moves);
+                System.out.println (moves);
+                break;
+            } else {
+                break;
+            }
         }
         counter = 1;
         //Checking upper left diagonal
         while (isValidPosition(myPosition.getRow () + counter, myPosition.getColumn () - counter)) {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + counter, myPosition.getColumn () - counter), null);
-            System.out.println ("====");
-            bishopMoves.add (moves);
-            System.out.println (moves);
-            counter += 1;
+            ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () + counter,myPosition.getColumn () - counter));
+            ChessPiece currentPiece = board.getPiece (myPosition);
+            System.out.println (nextPiece);
+            if (nextPiece == null) {
+                System.out.println ("====");
+                bishopMoves.add(moves);
+                System.out.println (moves);
+                counter += 1;
+            } else if (nextPiece.pieceColor != currentPiece.pieceColor){
+                bishopMoves.add(moves);
+                System.out.println (moves);
+                break;
+            } else {
+                break;
+            }
         }
-
-
-
 
         return bishopMoves;
 
@@ -111,7 +152,7 @@ public class ChessPiece {
     }
 
     private boolean isValidPosition (int row, int col) {
-        return row >= 1 && row < 9 && col >= 1 && col < 9;
+        return (row >= 1 && row < 9 && col >= 1 && col < 9);
     }
 
     @Override
@@ -125,5 +166,13 @@ public class ChessPiece {
     @Override
     public int hashCode () {
         return Objects.hash (pieceColor, type);
+    }
+
+    @Override
+    public String toString () {
+        return "ChessPiece{" +
+                "pieceColor=" + pieceColor +
+                ", type=" + type +
+                '}';
     }
 }
