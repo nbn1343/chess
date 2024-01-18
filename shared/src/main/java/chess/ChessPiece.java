@@ -3,6 +3,7 @@ package chess;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 
 /**
  * Represents a single chess piece
@@ -63,6 +64,43 @@ public class ChessPiece {
     public Collection<ChessMove> bishopMove (ChessBoard board, ChessPosition myPosition) {
         //A bishop moves diagonally across the board in either direction
         HashSet<ChessMove> bishopMoves = new HashSet<> ();
+        int counter = 1;
+
+        //Checking upper right diagonal
+        while (isValidPosition(myPosition.getRow () + counter, myPosition.getColumn () + counter)) {
+            ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + counter,myPosition.getColumn () + counter),null);
+            System.out.println ("====");
+            bishopMoves.add(moves);
+            System.out.println (moves);
+            counter += 1;
+        }
+        counter = 1;
+        //Checking lower right diagonal
+        while (isValidPosition(myPosition.getRow () - counter, myPosition.getColumn () + counter)) {
+            ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - counter, myPosition.getColumn () + counter), null);
+            System.out.println ("====");
+            bishopMoves.add (moves);
+            System.out.println (moves);
+            counter += 1;
+        }
+        counter = 1;
+        //Checking lower left diagonal
+        while (isValidPosition(myPosition.getRow () - counter, myPosition.getColumn () - counter)) {
+            ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - counter, myPosition.getColumn () - counter), null);
+            System.out.println ("====");
+            bishopMoves.add (moves);
+            System.out.println (moves);
+            counter += 1;
+        }
+        counter = 1;
+        //Checking upper left diagonal
+        while (isValidPosition(myPosition.getRow () + counter, myPosition.getColumn () - counter)) {
+            ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + counter, myPosition.getColumn () - counter), null);
+            System.out.println ("====");
+            bishopMoves.add (moves);
+            System.out.println (moves);
+            counter += 1;
+        }
 
 
 
@@ -70,5 +108,22 @@ public class ChessPiece {
         return bishopMoves;
 
 
+    }
+
+    private boolean isValidPosition (int row, int col) {
+        return row >= 1 && row < 9 && col >= 1 && col < 9;
+    }
+
+    @Override
+    public boolean equals (Object o) {
+        if (this == o) return true;
+        if (o == null || getClass () != o.getClass ()) return false;
+        ChessPiece that = (ChessPiece) o;
+        return pieceColor == that.pieceColor && type == that.type;
+    }
+
+    @Override
+    public int hashCode () {
+        return Objects.hash (pieceColor, type);
     }
 }
