@@ -336,6 +336,16 @@ public class ChessPiece {
                 ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + 1, myPosition.getColumn ()), null);
                 ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () + 1, myPosition.getColumn ()));
                 if (nextPiece == null) {
+                    if ((myPosition.getRow () + 1) == 8) {
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + 1, myPosition.getColumn ()), PieceType.BISHOP);
+                        pawnMoves.add (moves);
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + 1, myPosition.getColumn ()), PieceType.QUEEN);
+                        pawnMoves.add (moves);
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + 1, myPosition.getColumn ()), PieceType.KNIGHT);
+                        pawnMoves.add (moves);
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + 1, myPosition.getColumn ()), PieceType.ROOK);
+                        pawnMoves.add (moves);
+                    }
                     pawnMoves.add (moves);
                 }
             //Capture Right
@@ -343,6 +353,16 @@ public class ChessPiece {
                 ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + 1, myPosition.getColumn () + 1), null);
                 ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () + 1, myPosition.getColumn () + 1));
                 if (nextPiece != null && nextPiece.pieceColor != currentPiece.pieceColor) {
+                    if ((myPosition.getRow () + 1) == 8) {
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + 1, myPosition.getColumn () + 1), PieceType.BISHOP);
+                        pawnMoves.add (moves);
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + 1, myPosition.getColumn () + 1), PieceType.QUEEN);
+                        pawnMoves.add (moves);
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + 1, myPosition.getColumn () + 1), PieceType.KNIGHT);
+                        pawnMoves.add (moves);
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + 1, myPosition.getColumn () + 1), PieceType.ROOK);
+                        pawnMoves.add (moves);
+                    }
                     pawnMoves.add (moves);
                 }
             //Capture Left
@@ -350,6 +370,16 @@ public class ChessPiece {
                 ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + 1, myPosition.getColumn () - 1), null);
                 ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () + 1, myPosition.getColumn () - 1));
                 if (nextPiece != null && nextPiece.pieceColor != currentPiece.pieceColor) {
+                    if ((myPosition.getRow () + 1) == 8) {
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + 1, myPosition.getColumn () - 1), PieceType.BISHOP);
+                        pawnMoves.add (moves);
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + 1, myPosition.getColumn () - 1), PieceType.QUEEN);
+                        pawnMoves.add (moves);
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + 1, myPosition.getColumn () - 1), PieceType.KNIGHT);
+                        pawnMoves.add (moves);
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + 1, myPosition.getColumn () - 1), PieceType.ROOK);
+                        pawnMoves.add (moves);
+                    }
                     pawnMoves.add (moves);
                 }
             }
@@ -370,13 +400,33 @@ public class ChessPiece {
                 ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - 1, myPosition.getColumn ()), null);
                 ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () - 1, myPosition.getColumn ()));
                 if (nextPiece == null) {
+                    if ((myPosition.getRow () - 1) == 1) {
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - 1, myPosition.getColumn ()), PieceType.BISHOP);
+                        pawnMoves.add (moves);
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - 1, myPosition.getColumn ()), PieceType.QUEEN);
+                        pawnMoves.add (moves);
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - 1, myPosition.getColumn ()), PieceType.KNIGHT);
+                        pawnMoves.add (moves);
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - 1, myPosition.getColumn ()), PieceType.ROOK);
+                        pawnMoves.add (moves);
+                    }
                     pawnMoves.add (moves);
                 }
             //Capture Right
-            } if (isValidPosition (myPosition.getRow () + 1, myPosition.getColumn () + 1)) {
+            } if (isValidPosition (myPosition.getRow () - 1, myPosition.getColumn () + 1)) {
                 ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - 1, myPosition.getColumn () + 1), null);
                 ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () - 1, myPosition.getColumn () + 1));
                 if (nextPiece != null && nextPiece.pieceColor != currentPiece.pieceColor) {
+                    if ((myPosition.getRow () - 1) == 1) {
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - 1, myPosition.getColumn () + 1), PieceType.BISHOP);
+                        pawnMoves.add (moves);
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - 1, myPosition.getColumn () + 1), PieceType.QUEEN);
+                        pawnMoves.add (moves);
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - 1, myPosition.getColumn () + 1), PieceType.KNIGHT);
+                        pawnMoves.add (moves);
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - 1, myPosition.getColumn () + 1), PieceType.ROOK);
+                        pawnMoves.add (moves);
+                    }
                     pawnMoves.add (moves);
                 }
             //Capture Left
@@ -384,6 +434,16 @@ public class ChessPiece {
                 ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - 1, myPosition.getColumn () - 1), null);
                 ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () - 1, myPosition.getColumn () - 1));
                 if (nextPiece != null && nextPiece.pieceColor != currentPiece.pieceColor) {
+                    if ((myPosition.getRow () - 1) == 1) {
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - 1, myPosition.getColumn () - 1), PieceType.BISHOP);
+                        pawnMoves.add (moves);
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - 1, myPosition.getColumn () - 1), PieceType.QUEEN);
+                        pawnMoves.add (moves);
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - 1, myPosition.getColumn () - 1), PieceType.KNIGHT);
+                        pawnMoves.add (moves);
+                        moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - 1, myPosition.getColumn () - 1), PieceType.ROOK);
+                        pawnMoves.add (moves);
+                    }
                     pawnMoves.add (moves);
                 }
             }
