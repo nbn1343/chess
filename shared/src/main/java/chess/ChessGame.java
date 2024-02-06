@@ -15,8 +15,6 @@ public class ChessGame {
     private ChessBoard board;
     private TeamColor teamColor;
 
-    ChessPosition startPosition;
-
     public ChessGame () {
 
     }
@@ -25,7 +23,11 @@ public class ChessGame {
      * @return Which team's turn it is
      */
     public TeamColor getTeamTurn () {
-        return teamColor;
+        if (teamColor == TeamColor.WHITE) {
+            return TeamColor.WHITE;
+        } else {
+            return TeamColor.BLACK;
+        }
     }
 
     /**
@@ -54,14 +56,12 @@ public class ChessGame {
      * startPosition
      */
     public Collection<ChessMove> validMoves (ChessPosition startPosition) {
-        this.startPosition = startPosition;
         ChessPiece currentPiece = board.getPiece (startPosition);
-        HashSet<ChessMove> moves = new HashSet<> ();
-
+        HashSet<ChessMove> moves = new HashSet<> (currentPiece.pieceMoves (board, startPosition));
         if (currentPiece == null) {
             return null;
         } else {
-            return currentPiece.pieceMoves (board, startPosition);
+            return moves;
         }
 
     }
@@ -78,9 +78,16 @@ public class ChessGame {
         ChessPosition startPosition = move.getStartPosition ();
         ChessPosition endPosition = move.getEndPosition ();
 
-        if (validMoves (startPosition) != null) {
-            this.board.addPiece (endPosition,board.getPiece (startPosition));
-            this.board.addPiece (startPosition,null);
+        if (!getTeamTurn().equals(board.getPiece(startPosition).getTeamColor())) {
+            throw new InvalidMoveException();
+        }
+
+        if (!validMoves(startPosition).contains(move)) {
+            throw new InvalidMoveException();
+        } else {
+            this.board.addPiece(endPosition, board.getPiece(startPosition));
+            this.board.addPiece(startPosition, null);
+            this.setTeamTurn(getTeamTurn() == TeamColor.WHITE ? TeamColor.BLACK : TeamColor.WHITE);
         }
 
     }
