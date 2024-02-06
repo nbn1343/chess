@@ -77,6 +77,7 @@ public class ChessGame {
     public void makeMove (ChessMove move) throws InvalidMoveException {
         ChessPosition startPosition = move.getStartPosition ();
         ChessPosition endPosition = move.getEndPosition ();
+        ChessPiece.PieceType promotionPiece = move.getPromotionPiece ();
 
         if (!getTeamTurn().equals(board.getPiece(startPosition).getTeamColor())) {
             throw new InvalidMoveException();
@@ -117,7 +118,13 @@ public class ChessGame {
             throw new InvalidMoveException ();
 
 
-        } else {
+        }
+        else if (promotionPiece != null) {
+            board.addPiece (endPosition,new ChessPiece (teamColor,promotionPiece));
+            board.addPiece(startPosition, null);
+            setTeamTurn(getTeamTurn() == TeamColor.WHITE ? TeamColor.BLACK : TeamColor.WHITE);
+        }
+        else {
             board.addPiece(endPosition, board.getPiece(startPosition));
             board.addPiece(startPosition, null);
             setTeamTurn(getTeamTurn() == TeamColor.WHITE ? TeamColor.BLACK : TeamColor.WHITE);
@@ -133,10 +140,6 @@ public class ChessGame {
      */
     public boolean isInCheck (TeamColor teamColor) {
         ChessPosition kingPosition = kingPosition(teamColor);
-
-        if (kingPosition == null) {
-            throw new IllegalStateException("King not found on the board.");
-        }
 
         for (int row = 0; row <= 8; row++) {
             for (int col = 0; col <= 8; col++) {
