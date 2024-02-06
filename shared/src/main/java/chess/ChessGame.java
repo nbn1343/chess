@@ -1,5 +1,6 @@
 package chess;
 
+import java.security.KeyStore;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -181,9 +182,23 @@ public class ChessGame {
      * @param teamColor which team to check for checkmate
      * @return True if the specified team is in checkmate
      */
-    public boolean isInCheckmate (TeamColor teamColor) {
-        throw new RuntimeException ("Not implemented");
+    public boolean isInCheckmate(TeamColor teamColor) {
+        ChessPosition kingPosition = kingPosition (teamColor);
+        ChessPiece kingPiece = board.getPiece (kingPosition);
+        Collection<ChessMove> kingMoves = kingPiece.pieceMoves(board, kingPosition);
+        HashSet<ChessMove> inCheckMoves = new HashSet<> ();
+        if(isInCheck (getTeamTurn ())) {
+            for (ChessMove moves : kingMoves) {
+                if (isInCheck (getTeamTurn ())) {
+                    inCheckMoves.add (moves);
+                }
+            }
+        }
+        setTeamTurn(getTeamTurn() == TeamColor.WHITE ? TeamColor.BLACK : TeamColor.WHITE);
+      return inCheckMoves.size () == kingMoves.size ();
+
     }
+
 
     /**
      * Determines if the given team is in stalemate, which here is defined as having
