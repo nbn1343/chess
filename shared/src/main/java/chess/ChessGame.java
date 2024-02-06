@@ -80,9 +80,9 @@ public class ChessGame {
         ChessPosition endPosition = move.getEndPosition ();
         ChessPiece.PieceType promotionPiece = move.getPromotionPiece ();
 
-        if (!getTeamTurn().equals(board.getPiece(startPosition).getTeamColor())) {
-            throw new InvalidMoveException();
-        }
+//        if (!getTeamTurn().equals(board.getPiece(startPosition).getTeamColor())) {
+//            throw new InvalidMoveException();
+//        }
 
         if (!validMoves(startPosition).contains(move)) {
             throw new InvalidMoveException();
@@ -187,15 +187,15 @@ public class ChessGame {
         ChessPiece kingPiece = board.getPiece (kingPosition);
         Collection<ChessMove> kingMoves = kingPiece.pieceMoves(board, kingPosition);
         HashSet<ChessMove> inCheckMoves = new HashSet<> ();
-        if(isInCheck (getTeamTurn ())) {
+        if(isInCheck (teamColor)) {
             for (ChessMove moves : kingMoves) {
                 ChessPosition start = moves.getStartPosition ();
                 ChessPosition end = moves.getEndPosition ();
 
+                ChessPiece capturedPiece = board.getPiece (end);
                 board.addPiece (end, board.getPiece (start));
                 board.addPiece (start, null);
-                ChessPiece capturedPiece = board.getPiece (end);
-                if (isInCheck (getTeamTurn ())) {
+                if (isInCheck (teamColor)) {
                     inCheckMoves.add (moves);
                 }
                 board.addPiece (start, board.getPiece (end));
@@ -203,7 +203,7 @@ public class ChessGame {
             }
         }
         setTeamTurn(getTeamTurn() == TeamColor.WHITE ? TeamColor.BLACK : TeamColor.WHITE);
-      return inCheckMoves.size () == kingMoves.size ();
+      return inCheckMoves.size () == kingMoves.size () && inCheckMoves.size () + kingMoves.size () != 0;
 
     }
 
@@ -224,9 +224,9 @@ public class ChessGame {
             ChessPosition start = moves.getStartPosition ();
             ChessPosition end = moves.getEndPosition ();
 
+            ChessPiece capturedPiece = board.getPiece (end);
             board.addPiece (end, board.getPiece (start));
             board.addPiece (start, null);
-            ChessPiece capturedPiece = board.getPiece (end);
             if (isInCheck (getTeamTurn ())) {
                 inCheckMoves.add (moves);
             }
