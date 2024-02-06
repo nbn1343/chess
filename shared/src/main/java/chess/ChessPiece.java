@@ -96,15 +96,15 @@ public class ChessPiece {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - counter, myPosition.getColumn () + counter), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () - counter,myPosition.getColumn () + counter));
             ChessPiece currentPiece = board.getPiece (myPosition);
-            System.out.println (nextPiece);
+////            System.out.println (nextPiece);
             if (nextPiece == null) {
-                System.out.println ("====");
+////                System.out.println ("====");
                 bishopMoves.add(moves);
-                System.out.println (moves);
+////                System.out.println (moves);
                 counter += 1;
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 bishopMoves.add(moves);
-                System.out.println (moves);
+////                System.out.println (moves);
                 break;
             } else {
                 break;
@@ -116,15 +116,15 @@ public class ChessPiece {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - counter, myPosition.getColumn () - counter), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () - counter,myPosition.getColumn () - counter));
             ChessPiece currentPiece = board.getPiece (myPosition);
-            System.out.println (nextPiece);
+////            System.out.println (nextPiece);
             if (nextPiece == null) {
-                System.out.println ("====");
+//                System.out.println ("====");
                 bishopMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 counter += 1;
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 bishopMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 break;
             } else {
                 break;
@@ -136,15 +136,15 @@ public class ChessPiece {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + counter, myPosition.getColumn () - counter), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () + counter,myPosition.getColumn () - counter));
             ChessPiece currentPiece = board.getPiece (myPosition);
-            System.out.println (nextPiece);
+//            System.out.println (nextPiece);
             if (nextPiece == null) {
-                System.out.println ("====");
+//                System.out.println ("====");
                 bishopMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 counter += 1;
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 bishopMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 break;
             } else {
                 break;
@@ -459,15 +459,15 @@ public class ChessPiece {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + counter,myPosition.getColumn () + counter),null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () + counter,myPosition.getColumn () + counter));
             ChessPiece currentPiece = board.getPiece (myPosition);
-            System.out.println (nextPiece);
+//            System.out.println (nextPiece);
             if (nextPiece == null) {
-                System.out.println ("====");
+//                System.out.println ("====");
                 queenMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 counter += 1;
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 queenMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 break;
             } else {
                 break;
@@ -479,15 +479,15 @@ public class ChessPiece {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - counter, myPosition.getColumn () + counter), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () - counter,myPosition.getColumn () + counter));
             ChessPiece currentPiece = board.getPiece (myPosition);
-            System.out.println (nextPiece);
+//            System.out.println (nextPiece);
             if (nextPiece == null) {
-                System.out.println ("====");
+//                System.out.println ("====");
                 queenMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 counter += 1;
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 queenMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 break;
             } else {
                 break;
@@ -499,15 +499,15 @@ public class ChessPiece {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - counter, myPosition.getColumn () - counter), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () - counter,myPosition.getColumn () - counter));
             ChessPiece currentPiece = board.getPiece (myPosition);
-            System.out.println (nextPiece);
+//            System.out.println (nextPiece);
             if (nextPiece == null) {
-                System.out.println ("====");
+//                System.out.println ("====");
                 queenMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 counter += 1;
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 queenMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 break;
             } else {
                 break;
@@ -519,15 +519,15 @@ public class ChessPiece {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + counter, myPosition.getColumn () - counter), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () + counter,myPosition.getColumn () - counter));
             ChessPiece currentPiece = board.getPiece (myPosition);
-            System.out.println (nextPiece);
+//            System.out.println (nextPiece);
             if (nextPiece == null) {
-                System.out.println ("====");
+//                System.out.println ("====");
                 queenMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 counter += 1;
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 queenMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 break;
             } else {
                 break;
@@ -539,15 +539,15 @@ public class ChessPiece {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + counter, myPosition.getColumn ()), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () + counter,myPosition.getColumn ()));
             ChessPiece currentPiece = board.getPiece (myPosition);
-            System.out.println (nextPiece);
+//            System.out.println (nextPiece);
             if (nextPiece == null) {
-                System.out.println ("====");
+//                System.out.println ("====");
                 queenMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 counter += 1;
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 queenMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 break;
             } else {
                 break;
@@ -559,15 +559,15 @@ public class ChessPiece {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - counter, myPosition.getColumn ()), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () - counter,myPosition.getColumn ()));
             ChessPiece currentPiece = board.getPiece (myPosition);
-            System.out.println (nextPiece);
+//            System.out.println (nextPiece);
             if (nextPiece == null) {
-                System.out.println ("====");
+//                System.out.println ("====");
                 queenMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 counter += 1;
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 queenMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 break;
             } else {
                 break;
@@ -579,15 +579,15 @@ public class ChessPiece {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow (), myPosition.getColumn () + counter), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow (),myPosition.getColumn () + counter));
             ChessPiece currentPiece = board.getPiece (myPosition);
-            System.out.println (nextPiece);
+//            System.out.println (nextPiece);
             if (nextPiece == null) {
-                System.out.println ("====");
+//                System.out.println ("====");
                 queenMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 counter += 1;
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 queenMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 break;
             } else {
                 break;
@@ -599,15 +599,15 @@ public class ChessPiece {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow (), myPosition.getColumn () - counter), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow (),myPosition.getColumn () - counter));
             ChessPiece currentPiece = board.getPiece (myPosition);
-            System.out.println (nextPiece);
+//            System.out.println (nextPiece);
             if (nextPiece == null) {
-                System.out.println ("====");
+//                System.out.println ("====");
                 queenMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 counter += 1;
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 queenMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 break;
             } else {
                 break;
@@ -627,15 +627,15 @@ public class ChessPiece {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + counter, myPosition.getColumn ()), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () + counter,myPosition.getColumn ()));
             ChessPiece currentPiece = board.getPiece (myPosition);
-            System.out.println (nextPiece);
+//            System.out.println (nextPiece);
             if (nextPiece == null) {
-                System.out.println ("====");
+//                System.out.println ("====");
                 rookMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 counter += 1;
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 rookMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 break;
             } else {
                 break;
@@ -647,15 +647,15 @@ public class ChessPiece {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - counter, myPosition.getColumn ()), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () - counter,myPosition.getColumn ()));
             ChessPiece currentPiece = board.getPiece (myPosition);
-            System.out.println (nextPiece);
+//            System.out.println (nextPiece);
             if (nextPiece == null) {
-                System.out.println ("====");
+//                System.out.println ("====");
                 rookMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 counter += 1;
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 rookMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 break;
             } else {
                 break;
@@ -667,15 +667,15 @@ public class ChessPiece {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow (), myPosition.getColumn () + counter), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow (),myPosition.getColumn () + counter));
             ChessPiece currentPiece = board.getPiece (myPosition);
-            System.out.println (nextPiece);
+//            System.out.println (nextPiece);
             if (nextPiece == null) {
-                System.out.println ("====");
+//                System.out.println ("====");
                 rookMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 counter += 1;
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 rookMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 break;
             } else {
                 break;
@@ -687,15 +687,15 @@ public class ChessPiece {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow (), myPosition.getColumn () - counter), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow (),myPosition.getColumn () - counter));
             ChessPiece currentPiece = board.getPiece (myPosition);
-            System.out.println (nextPiece);
+//            System.out.println (nextPiece);
             if (nextPiece == null) {
-                System.out.println ("====");
+//                System.out.println ("====");
                 rookMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 counter += 1;
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 rookMoves.add(moves);
-                System.out.println (moves);
+//                System.out.println (moves);
                 break;
             } else {
                 break;
