@@ -189,9 +189,17 @@ public class ChessGame {
         HashSet<ChessMove> inCheckMoves = new HashSet<> ();
         if(isInCheck (getTeamTurn ())) {
             for (ChessMove moves : kingMoves) {
+                ChessPosition start = moves.getStartPosition ();
+                ChessPosition end = moves.getEndPosition ();
+
+                board.addPiece (end, board.getPiece (start));
+                board.addPiece (start, null);
+                ChessPiece capturedPiece = board.getPiece (end);
                 if (isInCheck (getTeamTurn ())) {
                     inCheckMoves.add (moves);
                 }
+                board.addPiece (start, board.getPiece (end));
+                board.addPiece (end, capturedPiece);
             }
         }
         setTeamTurn(getTeamTurn() == TeamColor.WHITE ? TeamColor.BLACK : TeamColor.WHITE);
@@ -208,7 +216,26 @@ public class ChessGame {
      * @return True if the specified team is in stalemate, otherwise false
      */
     public boolean isInStalemate (TeamColor teamColor) {
-        throw new RuntimeException ("Not implemented");
+        ChessPosition kingPosition = kingPosition (teamColor);
+        ChessPiece kingPiece = board.getPiece (kingPosition);
+        Collection<ChessMove> kingMoves = kingPiece.pieceMoves(board, kingPosition);
+        HashSet<ChessMove> inCheckMoves = new HashSet<> ();
+        for (ChessMove moves : kingMoves) {
+            ChessPosition start = moves.getStartPosition ();
+            ChessPosition end = moves.getEndPosition ();
+
+            board.addPiece (end, board.getPiece (start));
+            board.addPiece (start, null);
+            ChessPiece capturedPiece = board.getPiece (end);
+            if (isInCheck (getTeamTurn ())) {
+                inCheckMoves.add (moves);
+            }
+            board.addPiece (start, board.getPiece (end));
+            board.addPiece (end, capturedPiece);
+
+        }
+        setTeamTurn(getTeamTurn() == TeamColor.WHITE ? TeamColor.BLACK : TeamColor.WHITE);
+        return inCheckMoves.size () == kingMoves.size ();
     }
 
     /**
