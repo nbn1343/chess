@@ -87,21 +87,21 @@ public class ChessBoard {
     }
 
 
-    public void printBoard() {
-        for (int row = 8; row >= 1; row--) {
-            for (int col = 1; col <= 8; col++) {
-                ChessPiece piece = board[row][col];
-                if (piece != null) {
-                    char pieceChar = piece.getPieceType().name().charAt(0);
-                    char displayChar = (piece.getTeamColor() == ChessGame.TeamColor.WHITE) ? Character.toLowerCase(pieceChar) : pieceChar;
-                    System.out.print("|" + displayChar);
-                } else {
-                    System.out.print("| ");
-                }
-            }
-            System.out.println("|");
-        }
-    }
+//    public void printBoard() {
+//        for (int row = 8; row >= 1; row--) {
+//            for (int col = 1; col <= 8; col++) {
+//                ChessPiece piece = board[row][col];
+//                if (piece != null) {
+//                    char pieceChar = piece.getPieceType().name().charAt(0);
+//                    char displayChar = (piece.getTeamColor() == ChessGame.TeamColor.WHITE) ? Character.toLowerCase(pieceChar) : pieceChar;
+//                    System.out.print("|" + displayChar);
+//                } else {
+//                    System.out.print("| ");
+//                }
+//            }
+//            System.out.println("|");
+//        }
+//    }
 
 
     @Override
@@ -118,51 +118,10 @@ public class ChessBoard {
     }
 
     @Override
-    public String toString() {
-
-        String returnString = "";
-
-        for (int i = 0; i < this.board.length; i++){
-            for (int j = 0; j < this.board.length; j++){
-
-                if(this.board[i][j] == null) {
-                    returnString += "| |";
-                }else{
-
-                    ChessPiece.PieceType type = this.board[i][j].getPieceType();
-                    ChessGame.TeamColor color = this.board[i][j].getTeamColor();
-
-
-                    switch(color){
-                        case WHITE:
-                            switch(type) {
-                                case KING -> returnString += "|K|";
-                                case PAWN -> returnString += "|P|";
-                                case BISHOP -> returnString += "|B|";
-                                case KNIGHT -> returnString += "|N|";
-                                case QUEEN -> returnString += "|Q|";
-                                case ROOK -> returnString += "|R|";
-                            }
-                            break;
-
-                        case BLACK:
-                            switch(type) {
-                                case KING -> returnString += "|k|";
-                                case PAWN -> returnString += "|p|";
-                                case BISHOP -> returnString += "|b|";
-                                case KNIGHT -> returnString += "|n|";
-                                case QUEEN -> returnString += "|q|";
-                                case ROOK -> returnString += "|r|";
-                            }
-                            break;
-                    }
-
-
-                }
-            }
-            returnString += "\n";
-        }
-        return returnString;
+    public String toString () {
+        return "ChessBoard{" +
+                "board=" + Arrays.toString (board) +
+                '}';
     }
 }
 
