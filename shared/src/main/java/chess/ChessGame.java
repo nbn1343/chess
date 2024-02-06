@@ -59,13 +59,24 @@ public class ChessGame {
     public Collection<ChessMove> validMoves (ChessPosition startPosition) {
         ChessPiece currentPiece = board.getPiece (startPosition);
         HashSet<ChessMove> moves = new HashSet<> (currentPiece.pieceMoves (board, startPosition));
-        if (currentPiece == null) {
-            return null;
-        } else {
-            return moves;
-        }
+        HashSet<ChessMove> validMove = new HashSet<> ();
+        for (ChessMove possibleMoves : moves) {
+            ChessPosition start = possibleMoves.getStartPosition ();
+            ChessPosition end = possibleMoves.getEndPosition ();
 
+            ChessPiece capturedPiece = board.getPiece (end);
+            board.addPiece (end, board.getPiece (start));
+            board.addPiece (start, null);
+            if (!isInCheck (currentPiece.pieceColor)) {
+                validMove.add (possibleMoves);
+            }
+            board.addPiece (start, board.getPiece (end));
+            board.addPiece (end, capturedPiece);
+
+        }
+        return validMove;
     }
+
 
     /**
      * Makes a move in a chess game
@@ -80,11 +91,12 @@ public class ChessGame {
         ChessPosition endPosition = move.getEndPosition ();
         ChessPiece.PieceType promotionPiece = move.getPromotionPiece ();
 
-//        if (!getTeamTurn().equals(board.getPiece(startPosition).getTeamColor())) {
-//            throw new InvalidMoveException();
-//        }
 
         if (!validMoves(startPosition).contains(move)) {
+            throw new InvalidMoveException();
+        }
+
+        if (!getTeamTurn ().equals(board.getPiece(startPosition).getTeamColor())) {
             throw new InvalidMoveException();
         }
 
@@ -142,8 +154,8 @@ public class ChessGame {
     public boolean isInCheck (TeamColor teamColor) {
         ChessPosition kingPosition = kingPosition(teamColor);
 
-        for (int row = 0; row <= 8; row++) {
-            for (int col = 0; col <= 8; col++) {
+        for (int row = 1; row <= 8; row++) {
+            for (int col = 1; col <= 8; col++) {
                 ChessPosition currentPosition = new ChessPosition(row, col);
                 ChessPiece currentPiece = board.getPiece(currentPosition);
 
@@ -202,8 +214,7 @@ public class ChessGame {
                 board.addPiece (end, capturedPiece);
             }
         }
-        setTeamTurn(getTeamTurn() == TeamColor.WHITE ? TeamColor.BLACK : TeamColor.WHITE);
-      return inCheckMoves.size () == kingMoves.size () && inCheckMoves.size () + kingMoves.size () != 0;
+        return inCheckMoves.size () == kingMoves.size () && inCheckMoves.size () + kingMoves.size () != 0;
 
     }
 
