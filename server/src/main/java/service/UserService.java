@@ -18,6 +18,7 @@ public class UserService {
 
   public void clearData() {
     userDAO.clear();
+    authDAO.clear();
   }
 
   public AuthData register(String username, String password, String email) throws DataAccessException {
@@ -46,6 +47,16 @@ public class UserService {
     AuthData authData = new AuthData(authToken, username);
     authDAO.createAuth(authData);
     return authData;
+  }
+
+  public void logout(String authToken) throws DataAccessException {
+    // Check if authToken is null or empty
+    if (authDAO.getAuth(authToken) == null || authToken.isEmpty()) {
+      throw new DataAccessException("Error: unauthorized");
+    }
+
+    // Call AuthDAO to delete the authentication data
+    authDAO.deleteAuth(authToken);
   }
 }
 

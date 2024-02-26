@@ -25,11 +25,24 @@ class UserServiceTest {
   }
 
   @Test
+  void successfulClear() throws DataAccessException {
+    userService.register("User1", "password1", "user1@email.com");
+    userService.register("User2", "password2", "user2@email.com");
+    userService.register("User3", "password3", "user3@email.com");
+
+    userService.clearData();
+
+    // Verify that the userDAO is empty after clearing
+    assertTrue(userDAO.getAllUsers().isEmpty(), "UserDAO should be empty after clear");
+
+    // Verify that the authDAO is empty after clearing
+    assertTrue(authDAO.getAllAuthData().isEmpty(), "AuthDAO should be empty after clear");
+  }
+
+  @Test
   void goodRegister() throws DataAccessException {
-    // Arrange: Create a user
     UserData user = new UserData("Username", "password", "test@email.com");
 
-    // Act: Register the user
     AuthData returnData = userService.register("Username", "password", "test@email.com");
 
     // Assert: Verify registration was successful
@@ -58,10 +71,8 @@ class UserServiceTest {
 
   @Test
   void successfulLogin() throws DataAccessException {
-    // Register a user first
     userService.register("Username", "password", "test@email.com");
 
-    // Perform login
     AuthData returnData = userService.login("Username", "password");
 
     // Verify login result
@@ -72,7 +83,6 @@ class UserServiceTest {
 
   @Test
   void invalidCredentials() throws DataAccessException {
-    // Register a user first
     userService.register("Username", "password", "test@email.com");
 
     // Perform login with invalid credentials
@@ -88,4 +98,28 @@ class UserServiceTest {
     Assertions.assertThrows(DataAccessException.class, () -> userService.login("", "password"), "Login should fail with empty username");
     Assertions.assertThrows(DataAccessException.class, () -> userService.login("Username", ""), "Login should fail with empty password");
   }
+
+  @Test
+  void successfulLogout() throws DataAccessException {
+    userService.register("Username", "password", "test@email.com");
+
+    AuthData authData = userService.login("Username", "password");
+    String authToken = authData.authToken();
+
+    userService.logout(authToken);
+
+    assertNull(authDAO.getAuth(authToken), "AuthData should be removed from AuthDAO after logout");
+  }
+  @Test
+  void invalidAuthTokenLogout() {
+    String invalidAuthToken = "invalidAuthToken";
+
+    DataAccessException exception = assertThrows(DataAccessException.class, () -> userService.logout(invalidAuthToken),
+            "Logout with invalid authToken should throw DataAccessException");
+
+    // Verify that the exception message indicates unauthorized access
+    assertTrue(exception.getMessage().toLowerCase().contains("unauthorized"),
+            "Exception message should indicate unauthorized access");
+  }
+
 }

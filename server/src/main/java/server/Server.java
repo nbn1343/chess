@@ -30,7 +30,7 @@ public class Server {
         Spark.get ("/hello", (req, res) -> "Hello Nathan!");
         Spark.post ("/user", this :: register);
         Spark.post ("/session",this::login);
-//        Spark.delete("/session",this::logout);
+        Spark.delete("/session",this::logout);
 //        Spark.get("/game",this::listGames);
 //        Spark.post("/game",this::createGame);
 //        Spark.put("/game",this::joinGame);
@@ -106,4 +106,28 @@ public class Server {
             return new Gson().toJson(new ErrorMessage("Internal Server Error"));
         }
     }
+
+    private Object logout(Request req, Response res) {
+        try {
+            // Extract authToken from the request headers
+            String authToken = req.headers("authorization");
+
+            // Call UserService to perform logout
+            userService.logout(authToken);
+
+            // Build success response
+            res.status(200);
+            res.type("application/json");
+            return "{}";
+        } catch (DataAccessException e) {
+            res.status(401); // Unauthorized
+            res.type("application/json");
+            return new Gson().toJson(new ErrorMessage(e.getMessage()));
+        } catch (Exception e) {
+            res.status(500); // Internal Server Error
+            res.type("application/json");
+            return new Gson().toJson(new ErrorMessage("Internal Server Error"));
+        }
+    }
+
 }

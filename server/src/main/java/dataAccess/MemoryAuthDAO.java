@@ -3,7 +3,9 @@ package dataAccess;
 import model.AuthData;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class MemoryAuthDAO implements AuthDAOInterface{
 
@@ -17,6 +19,11 @@ public class MemoryAuthDAO implements AuthDAOInterface{
   @Override
   public AuthData getAuth(String authToken) {
     return authMap.get(authToken);
+  }
+
+  @Override
+  public List<AuthData> getAllAuthData() {
+    return new ArrayList<> (authMap.values());
   }
 
   @Override

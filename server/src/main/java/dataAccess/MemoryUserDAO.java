@@ -2,7 +2,9 @@ package dataAccess;
 
 import model.UserData;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class MemoryUserDAO implements UserDAOInterface{
   private final HashMap<String, UserData> mapUser = new HashMap<>();
@@ -15,6 +17,11 @@ public class MemoryUserDAO implements UserDAOInterface{
   @Override
   public UserData getUser(String userName) {
     return mapUser.get(userName);
+  }
+
+  @Override
+  public List<UserData> getAllUsers() {
+    return new ArrayList<> (mapUser.values());
   }
 
   @Override
