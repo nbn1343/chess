@@ -4,11 +4,23 @@ import java.util.HashMap;
 
 import model.GameData;
 
-public class MemoryGameDAO {
+public class MemoryGameDAO implements GameDAOInterface {
+  private HashMap<Integer, GameData> gameMap = new HashMap<>();
+  private int nextGameID = 1;
 
-  HashMap<String, GameData> mapGame = new HashMap<> ();
+  @Override
+  public void createGame(GameData game) {
+    gameMap.put(nextGameID++, game);
+  }
 
+  @Override
+  public GameData getGame(int gameID) {
+    return gameMap.get(gameID);
+  }
+
+  @Override
   public void clear() {
-    mapGame.clear();
+    gameMap.clear();
+    nextGameID = 1;
   }
 }

@@ -58,5 +58,12 @@ public class UserService {
     // Call AuthDAO to delete the authentication data
     authDAO.deleteAuth(authToken);
   }
+
+  public boolean isValidAuthToken(String authToken) {
+    // Check if the authToken exists in the AuthDAO
+    AuthData authData = authDAO.getAuth(authToken);
+    // If authData is null, the authToken is invalid or expired
+    return authData != null;
+  }
 }
 

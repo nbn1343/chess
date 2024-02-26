@@ -1,16 +1,17 @@
 package server;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import dataAccess.DataAccessException;
 import dataAccess.MemoryUserDAO;
 import dataAccess.MemoryGameDAO;
 import dataAccess.MemoryAuthDAO;
+import model.GameData;
 import model.UserData;
 import model.AuthData;
 import spark.*;
 import com.google.gson.Gson;
 import service.*;
-
-import java.util.HashSet;
 
 public class Server {
 
@@ -20,6 +21,7 @@ public class Server {
 
     UserService userService = new UserService (memoryUserDAO, memoryAuthDAO);
 
+    GameService gameService = new GameService (memoryGameDAO, memoryAuthDAO);
 
     public int run (int desiredPort) {
         Spark.port (desiredPort);
@@ -29,10 +31,10 @@ public class Server {
         // Register your endpoints and handle exceptions here.
         Spark.get ("/hello", (req, res) -> "Hello Nathan!");
         Spark.post ("/user", this :: register);
-        Spark.post ("/session",this::login);
-        Spark.delete("/session",this::logout);
+        Spark.post ("/session", this :: login);
+        Spark.delete ("/session", this :: logout);
 //        Spark.get("/game",this::listGames);
-//        Spark.post("/game",this::createGame);
+        Spark.post ("/game", this :: createGame);
 //        Spark.put("/game",this::joinGame);
         Spark.delete ("/db", (req, res) -> {
             memoryUserDAO.clear ();
@@ -66,68 +68,103 @@ public class Server {
         } catch (DataAccessException e) {
             String errorMessage = e.getMessage ();
             if (errorMessage.contains ("already taken")) {
-                res.status (403); // Username already taken
+                res.status (403);
             } else if (errorMessage.contains ("bad request")) {
-                res.status (400); // Bad request
+                res.status (400);
             } else {
-                res.status (500); // Other errors
+                res.status (500);
             }
             res.type ("application/json");
             return new Gson ().toJson (new ErrorMessage (errorMessage));
         } catch (Exception e) {
-            res.status (500); // Internal Server Error
+            res.status (500);
             res.type ("application/json");
             return new Gson ().toJson (new ErrorMessage ("Internal Server Error"));
         }
 
     }
 
-    private Object login(Request req, Response res) {
+    private Object login (Request req, Response res) {
         try {
-            // Parse request body to extract username and password
-            UserData userData = new Gson().fromJson(req.body(), UserData.class);
-            String username = userData.username();
-            String password = userData.password();
+            UserData userData = new Gson ().fromJson (req.body (), UserData.class);
+            String username = userData.username ();
+            String password = userData.password ();
 
-            // Call UserService to perform login
-            AuthData authData = userService.login(username, password);
+            AuthData authData = userService.login (username, password);
 
-            // Build success response
-            res.status(200);
-            res.type("application/json");
-            return new Gson().toJson(authData);
+            res.status (200);
+            res.type ("application/json");
+            return new Gson ().toJson (authData);
         } catch (DataAccessException e) {
-            res.status(401); // Unauthorized
-            res.type("application/json");
-            return new Gson().toJson(new ErrorMessage(e.getMessage()));
+            res.status (401); // Unauthorized
+            res.type ("application/json");
+            return new Gson ().toJson (new ErrorMessage (e.getMessage ()));
         } catch (Exception e) {
-            res.status(500); // Internal Server Error
-            res.type("application/json");
-            return new Gson().toJson(new ErrorMessage("Internal Server Error"));
+            res.status (500);
+            res.type ("application/json");
+            return new Gson ().toJson (new ErrorMessage ("Internal Server Error"));
         }
     }
 
-    private Object logout(Request req, Response res) {
+    private Object logout (Request req, Response res) {
         try {
-            // Extract authToken from the request headers
-            String authToken = req.headers("authorization");
+            String authToken = req.headers ("authorization");
 
-            // Call UserService to perform logout
-            userService.logout(authToken);
+            userService.logout (authToken);
 
-            // Build success response
-            res.status(200);
-            res.type("application/json");
+            res.status (200);
+            res.type ("application/json");
             return "{}";
         } catch (DataAccessException e) {
-            res.status(401); // Unauthorized
-            res.type("application/json");
-            return new Gson().toJson(new ErrorMessage(e.getMessage()));
+            res.status (401); // Unauthorized
+            res.type ("application/json");
+            return new Gson ().toJson (new ErrorMessage (e.getMessage ()));
         } catch (Exception e) {
-            res.status(500); // Internal Server Error
-            res.type("application/json");
-            return new Gson().toJson(new ErrorMessage("Internal Server Error"));
+            res.status (500);
+            res.type ("application/json");
+            return new Gson ().toJson (new ErrorMessage ("Internal Server Error"));
         }
     }
 
-}
+    private Object createGame (Request req, Response res) {
+        try {
+            String authToken = req.headers("Authorization");
+
+            if (authToken == null || authToken.isEmpty()) {
+                res.status(401); // Unauthorized
+                res.type("application/json");
+                return new Gson().toJson(new ErrorMessage("Error: unauthorized"));
+            }
+
+            if (!userService.isValidAuthToken(authToken)) {
+                res.status(401); // Unauthorized
+                res.type("application/json");
+                return new Gson().toJson(new ErrorMessage("Error: authToken is invalid or expired"));
+            }
+
+            GameData gameData = new Gson().fromJson(req.body(), GameData.class);
+            String gameName = gameData.gameName();
+            String whiteUsername = gameData.whiteUsername();
+            String blackUsername = gameData.blackUsername();
+            Object game = gameData.game();
+
+            int createdGameID = gameService.createGame(whiteUsername, blackUsername, gameName, game, authToken);
+
+            JsonObject jsonResponse = new JsonObject();
+            jsonResponse.addProperty("gameID", createdGameID);
+            res.status(200);
+            res.type("application/json");
+            return jsonResponse.toString();
+        } catch (DataAccessException e) {
+            res.status(400);
+            res.type("application/json");
+            return new Gson().toJson(new ErrorMessage("Error: bad request"));
+        } catch (Exception e) {
+            res.status(500);
+            res.type("application/json");
+            return new Gson().toJson(new ErrorMessage("Internal Server Error"));
+        }
+
+
+        }
+    }
