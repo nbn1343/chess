@@ -27,9 +27,9 @@ public class Server {
         Spark.staticFiles.location ("web");
 
         // Register your endpoints and handle exceptions here.
-        Spark.get("/hello", (req, res) -> "Hello Nathan!");
-        Spark.post ("/user",this::register);
-//        Spark.post ("/session",this::login);
+        Spark.get ("/hello", (req, res) -> "Hello Nathan!");
+        Spark.post ("/user", this :: register);
+        Spark.post ("/session",this::login);
 //        Spark.delete("/session",this::logout);
 //        Spark.get("/game",this::listGames);
 //        Spark.post("/game",this::createGame);
@@ -51,27 +51,59 @@ public class Server {
         Spark.awaitStop ();
     }
 
-    private Object register(Request req, Response res) {
+    private Object register (Request req, Response res) {
         try {
+            UserData userData = new Gson ().fromJson (req.body (), UserData.class);
+            String username = userData.username ();
+            String password = userData.password ();
+            String email = userData.email ();
+
+            AuthData authData = userService.register (username, password, email);
+
+            res.status (200);
+            res.type ("application/json");
+            return new Gson ().toJson (authData);
+        } catch (DataAccessException e) {
+            String errorMessage = e.getMessage ();
+            if (errorMessage.contains ("already taken")) {
+                res.status (403); // Username already taken
+            } else if (errorMessage.contains ("bad request")) {
+                res.status (400); // Bad request
+            } else {
+                res.status (500); // Other errors
+            }
+            res.type ("application/json");
+            return new Gson ().toJson (new ErrorMessage (errorMessage));
+        } catch (Exception e) {
+            res.status (500); // Internal Server Error
+            res.type ("application/json");
+            return new Gson ().toJson (new ErrorMessage ("Internal Server Error"));
+        }
+
+    }
+
+    private Object login(Request req, Response res) {
+        try {
+            // Parse request body to extract username and password
             UserData userData = new Gson().fromJson(req.body(), UserData.class);
             String username = userData.username();
             String password = userData.password();
-            String email = userData.email();
 
-            AuthData authData = userService.register(username, password, email);
+            // Call UserService to perform login
+            AuthData authData = userService.login(username, password);
 
+            // Build success response
             res.status(200);
             res.type("application/json");
             return new Gson().toJson(authData);
         } catch (DataAccessException e) {
-            res.status(403);
+            res.status(401); // Unauthorized
             res.type("application/json");
             return new Gson().toJson(new ErrorMessage(e.getMessage()));
         } catch (Exception e) {
-            res.status(500);
+            res.status(500); // Internal Server Error
             res.type("application/json");
             return new Gson().toJson(new ErrorMessage("Internal Server Error"));
         }
     }
-
 }

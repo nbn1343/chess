@@ -22,7 +22,10 @@ public class UserService {
 
   public AuthData register(String username, String password, String email) throws DataAccessException {
     if (userDAO.getUser(username) != null){
-      throw new DataAccessException ("Username already taken");
+      throw new DataAccessException ("Error: already taken");
+    }
+    if (username == null | password == null | email == null) {
+      throw new DataAccessException ("Error: bad request");
     }
     String authToken = UUID.randomUUID().toString();
 
@@ -32,6 +35,17 @@ public class UserService {
     userDAO.createUser(user);
     authDAO.createAuth (authdata);
     return authdata;
+  }
+
+  public AuthData login(String username, String password) throws DataAccessException {
+    UserData user = userDAO.getUser(username);
+    if (user == null || !user.password().equals(password)) {
+      throw new DataAccessException("Error: unauthorized");
+    }
+    String authToken = UUID.randomUUID().toString();
+    AuthData authData = new AuthData(authToken, username);
+    authDAO.createAuth(authData);
+    return authData;
   }
 }
 
