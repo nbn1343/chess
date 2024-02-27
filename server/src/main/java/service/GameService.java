@@ -5,6 +5,7 @@ import dataAccess.GameDAOInterface;
 import dataAccess.DataAccessException;
 import model.GameData;
 
+import java.util.List;
 
 
 public class GameService {
@@ -24,6 +25,37 @@ public class GameService {
     GameData newGame = new GameData(1, whiteUsername, blackUsername, gameName, game);
     gameDAO.createGame(newGame);
     return newGame.gameID ();
+  }
+
+  public List<GameData> listGames(String authToken) throws DataAccessException {
+    if (!isValidAuthToken(authToken)) {
+      throw new DataAccessException("Error: unauthorized");
+    }
+    return gameDAO.getAllGames();
+  }
+
+  public void joinGame(String authToken, int gameID, String playerColor) throws DataAccessException {
+    if (!isValidAuthToken(authToken)) {
+      throw new DataAccessException("Error: unauthorized");
+    }
+
+    GameData gameData = gameDAO.getGame(gameID);
+    if (gameData == null) {
+      throw new DataAccessException("Error: bad request");
+    }
+
+    if (("WHITE".equals(playerColor) && gameData.whiteUsername() != null) ||
+            ("BLACK".equals(playerColor) && gameData.blackUsername() != null)) {
+      throw new DataAccessException("Error: already taken");
+    }
+
+    if ("WHITE".equals(playerColor)) {
+      gameData = new GameData(gameID, authDAO.getUsername(authToken), gameData.blackUsername(), gameData.gameName(), gameData.game());
+    } else if ("BLACK".equals(playerColor)) {
+      gameData = new GameData(gameID, gameData.whiteUsername(), authDAO.getUsername(authToken), gameData.gameName(), gameData.game());
+    }
+
+    gameDAO.updateGame(gameData);
   }
   private boolean isValidAuthToken(String authToken) {
     return authDAO.getAuth(authToken) != null;

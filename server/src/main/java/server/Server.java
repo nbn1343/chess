@@ -1,5 +1,6 @@
 package server;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dataAccess.DataAccessException;
@@ -12,6 +13,8 @@ import model.AuthData;
 import spark.*;
 import com.google.gson.Gson;
 import service.*;
+
+import java.util.List;
 
 public class Server {
 
@@ -33,9 +36,9 @@ public class Server {
         Spark.post ("/user", this :: register);
         Spark.post ("/session", this :: login);
         Spark.delete ("/session", this :: logout);
-//        Spark.get("/game",this::listGames);
+        Spark.get("/game",this::listGames);
         Spark.post ("/game", this :: createGame);
-//        Spark.put("/game",this::joinGame);
+        Spark.put("/game",this::joinGame);
         Spark.delete ("/db", (req, res) -> {
             memoryUserDAO.clear ();
             memoryGameDAO.clear ();
@@ -156,15 +159,104 @@ public class Server {
             res.type("application/json");
             return jsonResponse.toString();
         } catch (DataAccessException e) {
-            res.status(400);
-            res.type("application/json");
-            return new Gson().toJson(new ErrorMessage("Error: bad request"));
+            String errorMessage = e.getMessage ();
+            if (errorMessage.contains ("bad request")) {
+                res.status (400);
+            } else {
+                res.status (500);
+            }
+            res.type ("application/json");
+            return new Gson ().toJson (new ErrorMessage (errorMessage));
         } catch (Exception e) {
-            res.status(500);
-            res.type("application/json");
-            return new Gson().toJson(new ErrorMessage("Internal Server Error"));
+            res.status (500);
+            res.type ("application/json");
+            return new Gson ().toJson (new ErrorMessage ("Internal Server Error"));
         }
 
 
+        }
+
+    private Object listGames(Request req, Response res) {
+        try {
+            // Extract authToken from request headers
+            String authToken = req.headers("authorization");
+
+            // Check if authToken is valid
+            if (!userService.isValidAuthToken(authToken)) {
+                res.status(401); // Unauthorized
+                res.type("application/json");
+                return new Gson().toJson(new ErrorMessage("Error: authToken is invalid or expired"));
+            }
+
+            // Call GameService to get the list of games
+            List<GameData> games = gameService.listGames(authToken);
+
+            // Build JSON response
+            JsonArray gamesArray = new JsonArray();
+            for (GameData game : games) {
+                JsonObject gameObject = new JsonObject();
+                gameObject.addProperty("gameID", game.gameID());
+                gameObject.addProperty("whiteUsername", game.whiteUsername());
+                gameObject.addProperty("blackUsername", game.blackUsername());
+                gameObject.addProperty("gameName", game.gameName());
+                gamesArray.add(gameObject);
+            }
+
+            JsonObject jsonResponse = new JsonObject();
+            jsonResponse.add("games", gamesArray);
+
+            res.status(200); // OK
+            res.type("application/json");
+            return jsonResponse.toString();
+        } catch (Exception e) {
+            res.status(500); // Internal Server Error
+            return new Gson().toJson(new ErrorMessage("Error: " + e.getMessage()));
         }
     }
+
+    private Object joinGame(Request req, Response res) {
+        try {
+            // Extract authToken from the request headers
+            String authToken = req.headers("Authorization");
+            if (authToken == null || authToken.isEmpty()) {
+                res.status(401); // Unauthorized
+                return new Gson().toJson(new ErrorMessage("Error: unauthorized"));
+            }
+            if (!userService.isValidAuthToken(authToken)) {
+                res.status(401); // Unauthorized
+                res.type("application/json");
+                return new Gson().toJson(new ErrorMessage("Error: authToken is invalid or expired"));
+            }
+
+            // Extract gameID and playerColor from the request body
+            JsonObject requestBody = new JsonParser().parse(req.body()).getAsJsonObject();
+            int gameID = requestBody.get("gameID").getAsInt();
+            String playerColor = requestBody.get("playerColor").getAsString();
+
+            // Call GameService to join the game
+            gameService.joinGame(authToken, gameID, playerColor);
+
+            // Build success response
+            res.status(200);
+            res.type("application/json");
+            return "{}";
+        } catch (DataAccessException e) {
+            String errorMessage = e.getMessage ();
+            if (errorMessage.contains ("already taken")) {
+                res.status (403);
+            } else if (errorMessage.contains ("bad request")) {
+                res.status (400);
+            } else {
+                res.status (500);
+            }
+            res.type ("application/json");
+            return new Gson ().toJson (new ErrorMessage (errorMessage));
+        } catch (Exception e) {
+            res.status (500);
+            res.type ("application/json");
+            return new Gson ().toJson (new ErrorMessage ("Internal Server Error"));
+        }
+    }
+
+
+}

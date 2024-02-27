@@ -22,6 +22,12 @@ public class MemoryAuthDAO implements AuthDAOInterface{
   }
 
   @Override
+  public String getUsername(String authToken) {
+    AuthData authData = getAuth(authToken);
+    return authData != null ? authData.username() : null;
+  }
+
+  @Override
   public List<AuthData> getAllAuthData() {
     return new ArrayList<> (authMap.values());
   }

@@ -1,7 +1,10 @@
 package dataAccess;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import model.AuthData;
 import model.GameData;
 
 public class MemoryGameDAO implements GameDAOInterface {
@@ -17,6 +20,16 @@ public class MemoryGameDAO implements GameDAOInterface {
   public GameData getGame(int gameID) {
     return gameMap.get(gameID);
   }
+
+  @Override
+  public void updateGame(GameData game) {
+    gameMap.put(game.gameID(), game);
+  }
+
+  public List<GameData> getAllGames() {
+    return new ArrayList<> (gameMap.values());
+  }
+
 
   @Override
   public void clear() {

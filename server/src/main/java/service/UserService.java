@@ -50,19 +50,15 @@ public class UserService {
   }
 
   public void logout(String authToken) throws DataAccessException {
-    // Check if authToken is null or empty
     if (authDAO.getAuth(authToken) == null || authToken.isEmpty()) {
       throw new DataAccessException("Error: unauthorized");
     }
 
-    // Call AuthDAO to delete the authentication data
     authDAO.deleteAuth(authToken);
   }
 
   public boolean isValidAuthToken(String authToken) {
-    // Check if the authToken exists in the AuthDAO
     AuthData authData = authDAO.getAuth(authToken);
-    // If authData is null, the authToken is invalid or expired
     return authData != null;
   }
 }
