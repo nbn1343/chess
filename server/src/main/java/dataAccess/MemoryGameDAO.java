@@ -5,7 +5,7 @@ import java.util.*;
 import model.GameData;
 
 public class MemoryGameDAO implements GameDAOInterface {
-  private HashMap<Integer, GameData> gameMap = new HashMap<>();
+  private final HashMap<Integer, GameData> gameMap = new HashMap<>();
   private int nextGameID = 1;
 
   @Override
@@ -38,16 +38,5 @@ public class MemoryGameDAO implements GameDAOInterface {
     nextGameID = 1;
   }
 
-  @Override
-  public boolean equals (Object o) {
-    if (this == o) return true;
-    if (o == null || getClass () != o.getClass ()) return false;
-    MemoryGameDAO that = (MemoryGameDAO) o;
-    return nextGameID == that.nextGameID && Objects.equals (gameMap, that.gameMap);
-  }
 
-  @Override
-  public int hashCode () {
-    return Objects.hash (gameMap, nextGameID);
-  }
 }

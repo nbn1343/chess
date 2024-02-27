@@ -66,17 +66,5 @@ public class UserService {
     return authData != null;
   }
 
-  @Override
-  public boolean equals (Object o) {
-    if (this == o) return true;
-    if (o == null || getClass () != o.getClass ()) return false;
-    UserService that = (UserService) o;
-    return Objects.equals (userDAO, that.userDAO) && Objects.equals (authDAO, that.authDAO);
-  }
-
-  @Override
-  public int hashCode () {
-    return Objects.hash (userDAO, authDAO);
-  }
 }
 

@@ -1,6 +1,5 @@
 package server;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dataAccess.*;
@@ -11,12 +10,8 @@ import spark.*;
 import com.google.gson.Gson;
 import service.*;
 
-import java.io.Console;
-import java.sql.SQLOutput;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
+
 
 public class Server {
 
@@ -250,16 +245,4 @@ public class Server {
         }
     }
 
-    @Override
-    public boolean equals (Object o) {
-        if (this == o) return true;
-        if (o == null || getClass () != o.getClass ()) return false;
-        Server server = (Server) o;
-        return Objects.equals (memoryUserDAO, server.memoryUserDAO) && Objects.equals (memoryGameDAO, server.memoryGameDAO) && Objects.equals (memoryAuthDAO, server.memoryAuthDAO) && Objects.equals (userService, server.userService) && Objects.equals (gameService, server.gameService);
-    }
-
-    @Override
-    public int hashCode () {
-        return Objects.hash (memoryUserDAO, memoryGameDAO, memoryAuthDAO, userService, gameService);
-    }
 }

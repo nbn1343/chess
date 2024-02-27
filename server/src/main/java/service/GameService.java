@@ -4,11 +4,9 @@ import dataAccess.AuthDAOInterface;
 import dataAccess.GameDAOInterface;
 import dataAccess.DataAccessException;
 import model.GameData;
-
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
-import java.util.Random;
+
 
 
 public class GameService {
@@ -65,18 +63,6 @@ public class GameService {
     return authDAO.getAuth(authToken) != null;
   }
 
-  @Override
-  public boolean equals (Object o) {
-    if (this == o) return true;
-    if (o == null || getClass () != o.getClass ()) return false;
-    GameService that = (GameService) o;
-    return Objects.equals (gameDAO, that.gameDAO) && Objects.equals (authDAO, that.authDAO);
-  }
-
-  @Override
-  public int hashCode () {
-    return Objects.hash (gameDAO, authDAO);
-  }
 }
 
 
