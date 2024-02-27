@@ -1,10 +1,7 @@
 package dataAccess;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
-import model.AuthData;
 import model.GameData;
 
 public class MemoryGameDAO implements GameDAOInterface {
@@ -12,22 +9,26 @@ public class MemoryGameDAO implements GameDAOInterface {
   private int nextGameID = 1;
 
   @Override
-  public void createGame(GameData game) {
-    gameMap.put(nextGameID++, game);
+  public GameData createGame(GameData game) {
+    int gameId = nextGameID++;
+    GameData updatedGame = new GameData (gameId,game.whiteUsername (),game.blackUsername (),game.gameName (),game.game ());
+    gameMap.put(gameId, updatedGame);
+    return updatedGame;
   }
 
   @Override
   public GameData getGame(int gameID) {
-    return gameMap.get(gameID);
+    return gameMap.get (gameID);
   }
 
   @Override
   public void updateGame(GameData game) {
     gameMap.put(game.gameID(), game);
+    System.out.println (gameMap.put(game.gameID(), game));
   }
 
-  public List<GameData> getAllGames() {
-    return new ArrayList<> (gameMap.values());
+  public HashSet<GameData> getAllGames() {
+    return new HashSet<> (gameMap.values());
   }
 
 
@@ -35,5 +36,18 @@ public class MemoryGameDAO implements GameDAOInterface {
   public void clear() {
     gameMap.clear();
     nextGameID = 1;
+  }
+
+  @Override
+  public boolean equals (Object o) {
+    if (this == o) return true;
+    if (o == null || getClass () != o.getClass ()) return false;
+    MemoryGameDAO that = (MemoryGameDAO) o;
+    return nextGameID == that.nextGameID && Objects.equals (gameMap, that.gameMap);
+  }
+
+  @Override
+  public int hashCode () {
+    return Objects.hash (gameMap, nextGameID);
   }
 }

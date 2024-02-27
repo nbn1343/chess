@@ -28,4 +28,6 @@ public class MemoryUserDAO implements UserDAOInterface{
   public void clear() {
     mapUser.clear();
   }
+
+
 }

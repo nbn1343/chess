@@ -10,4 +10,5 @@ public interface UserDAOInterface {
   UserData getUser(String userName);
   List<UserData> getAllUsers();
   void clear();
+
 }

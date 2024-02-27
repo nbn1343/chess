@@ -5,6 +5,8 @@ import dataAccess.DataAccessException;
 import model.AuthData;
 import model.UserData;
 import dataAccess.UserDAOInterface;
+
+import java.util.Objects;
 import java.util.UUID;
 
 public class UserService {
@@ -57,9 +59,24 @@ public class UserService {
     authDAO.deleteAuth(authToken);
   }
 
+
+
   public boolean isValidAuthToken(String authToken) {
     AuthData authData = authDAO.getAuth(authToken);
     return authData != null;
+  }
+
+  @Override
+  public boolean equals (Object o) {
+    if (this == o) return true;
+    if (o == null || getClass () != o.getClass ()) return false;
+    UserService that = (UserService) o;
+    return Objects.equals (userDAO, that.userDAO) && Objects.equals (authDAO, that.authDAO);
+  }
+
+  @Override
+  public int hashCode () {
+    return Objects.hash (userDAO, authDAO);
   }
 }
 

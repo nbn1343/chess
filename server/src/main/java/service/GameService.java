@@ -5,7 +5,10 @@ import dataAccess.GameDAOInterface;
 import dataAccess.DataAccessException;
 import model.GameData;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 
 public class GameService {
@@ -17,17 +20,17 @@ public class GameService {
     this.authDAO = authDAO;
   }
 
-  public int createGame(String whiteUsername, String blackUsername, String gameName, Object game, String authToken) throws DataAccessException {
+  public GameData createGame(int gameId, String whiteUsername, String blackUsername, String gameName, Object game, String authToken) throws DataAccessException {
     if (!isValidAuthToken(authToken)) {
       throw new DataAccessException("Error: unauthorized");
     }
 
-    GameData newGame = new GameData(1, whiteUsername, blackUsername, gameName, game);
-    gameDAO.createGame(newGame);
-    return newGame.gameID ();
+    GameData newGame = new GameData(gameId,whiteUsername, blackUsername, gameName, game);
+    GameData updatedGame = gameDAO.createGame(newGame);
+    return updatedGame;
   }
 
-  public List<GameData> listGames(String authToken) throws DataAccessException {
+  public Collection<GameData> listGames(String authToken) throws DataAccessException {
     if (!isValidAuthToken(authToken)) {
       throw new DataAccessException("Error: unauthorized");
     }
@@ -40,6 +43,7 @@ public class GameService {
     }
 
     GameData gameData = gameDAO.getGame(gameID);
+
     if (gameData == null) {
       throw new DataAccessException("Error: bad request");
     }
@@ -60,4 +64,19 @@ public class GameService {
   private boolean isValidAuthToken(String authToken) {
     return authDAO.getAuth(authToken) != null;
   }
+
+  @Override
+  public boolean equals (Object o) {
+    if (this == o) return true;
+    if (o == null || getClass () != o.getClass ()) return false;
+    GameService that = (GameService) o;
+    return Objects.equals (gameDAO, that.gameDAO) && Objects.equals (authDAO, that.authDAO);
+  }
+
+  @Override
+  public int hashCode () {
+    return Objects.hash (gameDAO, authDAO);
+  }
 }
+
+

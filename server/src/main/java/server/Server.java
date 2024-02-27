@@ -3,10 +3,7 @@ package server;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import dataAccess.DataAccessException;
-import dataAccess.MemoryUserDAO;
-import dataAccess.MemoryGameDAO;
-import dataAccess.MemoryAuthDAO;
+import dataAccess.*;
 import model.GameData;
 import model.UserData;
 import model.AuthData;
@@ -14,7 +11,12 @@ import spark.*;
 import com.google.gson.Gson;
 import service.*;
 
+import java.io.Console;
+import java.sql.SQLOutput;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 public class Server {
 
@@ -67,6 +69,7 @@ public class Server {
 
             res.status (200);
             res.type ("application/json");
+            memoryAuthDAO.getAllAuthData ();
             return new Gson ().toJson (authData);
         } catch (DataAccessException e) {
             String errorMessage = e.getMessage ();
@@ -145,19 +148,19 @@ public class Server {
                 return new Gson().toJson(new ErrorMessage("Error: authToken is invalid or expired"));
             }
 
+
             GameData gameData = new Gson().fromJson(req.body(), GameData.class);
             String gameName = gameData.gameName();
             String whiteUsername = gameData.whiteUsername();
             String blackUsername = gameData.blackUsername();
             Object game = gameData.game();
+            int gameID = gameData.gameID ();
 
-            int createdGameID = gameService.createGame(whiteUsername, blackUsername, gameName, game, authToken);
+            GameData createdGameID = gameService.createGame(gameID,whiteUsername, blackUsername, gameName, game, authToken);
 
-            JsonObject jsonResponse = new JsonObject();
-            jsonResponse.addProperty("gameID", createdGameID);
             res.status(200);
             res.type("application/json");
-            return jsonResponse.toString();
+            return new Gson ().toJson (createdGameID);
         } catch (DataAccessException e) {
             String errorMessage = e.getMessage ();
             if (errorMessage.contains ("bad request")) {
@@ -172,71 +175,60 @@ public class Server {
             res.type ("application/json");
             return new Gson ().toJson (new ErrorMessage ("Internal Server Error"));
         }
-
-
-        }
+    }
 
     private Object listGames(Request req, Response res) {
         try {
-            // Extract authToken from request headers
             String authToken = req.headers("authorization");
 
-            // Check if authToken is valid
             if (!userService.isValidAuthToken(authToken)) {
                 res.status(401); // Unauthorized
                 res.type("application/json");
                 return new Gson().toJson(new ErrorMessage("Error: authToken is invalid or expired"));
             }
 
-            // Call GameService to get the list of games
-            List<GameData> games = gameService.listGames(authToken);
+            Collection<GameData> games = gameService.listGames (authToken);
 
-            // Build JSON response
-            JsonArray gamesArray = new JsonArray();
-            for (GameData game : games) {
-                JsonObject gameObject = new JsonObject();
-                gameObject.addProperty("gameID", game.gameID());
-                gameObject.addProperty("whiteUsername", game.whiteUsername());
-                gameObject.addProperty("blackUsername", game.blackUsername());
-                gameObject.addProperty("gameName", game.gameName());
-                gamesArray.add(gameObject);
-            }
 
             JsonObject jsonResponse = new JsonObject();
-            jsonResponse.add("games", gamesArray);
+            jsonResponse.add("games", new Gson().toJsonTree(games));
 
-            res.status(200); // OK
+            res.status(200);
             res.type("application/json");
-            return jsonResponse.toString();
+            System.out.println (jsonResponse);
+            return jsonResponse;
         } catch (Exception e) {
-            res.status(500); // Internal Server Error
+            res.status(500);
             return new Gson().toJson(new ErrorMessage("Error: " + e.getMessage()));
         }
     }
 
     private Object joinGame(Request req, Response res) {
         try {
-            // Extract authToken from the request headers
             String authToken = req.headers("Authorization");
             if (authToken == null || authToken.isEmpty()) {
-                res.status(401); // Unauthorized
+                res.status(401);
                 return new Gson().toJson(new ErrorMessage("Error: unauthorized"));
             }
             if (!userService.isValidAuthToken(authToken)) {
-                res.status(401); // Unauthorized
+                res.status(401);
                 res.type("application/json");
                 return new Gson().toJson(new ErrorMessage("Error: authToken is invalid or expired"));
             }
 
-            // Extract gameID and playerColor from the request body
             JsonObject requestBody = new JsonParser().parse(req.body()).getAsJsonObject();
             int gameID = requestBody.get("gameID").getAsInt();
-            String playerColor = requestBody.get("playerColor").getAsString();
+            String playerColor = null;
+            if (requestBody.has("playerColor")) {
+                playerColor = requestBody.get("playerColor").getAsString();
+            }
 
-            // Call GameService to join the game
-            gameService.joinGame(authToken, gameID, playerColor);
+            if (playerColor == null || playerColor.isEmpty()) {
+                gameService.joinGame(authToken, gameID, null); // Pass null to indicate joining as an observer
+            } else {
+                gameService.joinGame(authToken, gameID, playerColor);
+            }
 
-            // Build success response
             res.status(200);
             res.type("application/json");
             return "{}";
@@ -258,5 +250,16 @@ public class Server {
         }
     }
 
+    @Override
+    public boolean equals (Object o) {
+        if (this == o) return true;
+        if (o == null || getClass () != o.getClass ()) return false;
+        Server server = (Server) o;
+        return Objects.equals (memoryUserDAO, server.memoryUserDAO) && Objects.equals (memoryGameDAO, server.memoryGameDAO) && Objects.equals (memoryAuthDAO, server.memoryAuthDAO) && Objects.equals (userService, server.userService) && Objects.equals (gameService, server.gameService);
+    }
 
+    @Override
+    public int hashCode () {
+        return Objects.hash (memoryUserDAO, memoryGameDAO, memoryAuthDAO, userService, gameService);
+    }
 }
