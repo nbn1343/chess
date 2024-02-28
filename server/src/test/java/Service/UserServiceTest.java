@@ -31,10 +31,8 @@ class UserServiceTest {
 
     userService.clearData();
 
-    // Verify that the userDAO is empty after clearing
     assertTrue(userDAO.getAllUsers().isEmpty(), "UserDAO should be empty after clear");
 
-    // Verify that the authDAO is empty after clearing
     assertTrue(authDAO.getAllAuthData().isEmpty(), "AuthDAO should be empty after clear");
   }
 
@@ -44,7 +42,6 @@ class UserServiceTest {
 
     AuthData returnData = userService.register("Username", "password", "test@email.com");
 
-    // Assert: Verify registration was successful
     assertNotNull(returnData, "No data returned after registration");
     assertNotNull(returnData.authToken(), "No authToken returned after registration");
     assertNotNull(returnData.username(), "No username returned after registration");
@@ -74,7 +71,6 @@ class UserServiceTest {
 
     AuthData returnData = userService.login("Username", "password");
 
-    // Verify login result
     Assertions.assertNotNull(returnData, "No data returned");
     Assertions.assertNotNull(returnData.authToken(), "No authToken returned");
     Assertions.assertNotNull(returnData.username(), "No username returned");
@@ -84,14 +80,12 @@ class UserServiceTest {
   void invalidCredentials() throws DataAccessException {
     userService.register("Username", "password", "test@email.com");
 
-    // Perform login with invalid credentials
     Assertions.assertThrows(DataAccessException.class, () -> userService.login("Username", "wrongpassword"), "Login should fail with invalid password");
     Assertions.assertThrows(DataAccessException.class, () -> userService.login("NonexistentUser", "password"), "Login should fail with nonexistent username");
   }
 
   @Test
   void nullOrEmptyCredentials() {
-    // Perform login with null or empty credentials
     Assertions.assertThrows(DataAccessException.class, () -> userService.login(null, "password"), "Login should fail with null username");
     Assertions.assertThrows(DataAccessException.class, () -> userService.login("Username", null), "Login should fail with null password");
     Assertions.assertThrows(DataAccessException.class, () -> userService.login("", "password"), "Login should fail with empty username");
@@ -116,7 +110,6 @@ class UserServiceTest {
     DataAccessException exception = assertThrows(DataAccessException.class, () -> userService.logout(invalidAuthToken),
             "Logout with invalid authToken should throw DataAccessException");
 
-    // Verify that the exception message indicates unauthorized access
     assertTrue(exception.getMessage().toLowerCase().contains("unauthorized"),
             "Exception message should indicate unauthorized access");
   }
