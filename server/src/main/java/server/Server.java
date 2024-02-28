@@ -30,12 +30,12 @@ public class Server {
 
         // Register your endpoints and handle exceptions here.
         Spark.get ("/hello", (req, res) -> "Hello Nathan!");
-        Spark.post ("/user", this :: register);
-        Spark.post ("/session", this :: login);
-        Spark.delete ("/session", this :: logout);
-        Spark.get("/game",this::listGames);
-        Spark.post ("/game", this :: createGame);
-        Spark.put("/game",this::joinGame);
+        Spark.post ("/user", this :: registerHandler);
+        Spark.post ("/session", this :: loginHandler);
+        Spark.delete ("/session", this :: logoutHandler);
+        Spark.get("/game",this::listGamesHandler);
+        Spark.post ("/game", this :: createGameHandler);
+        Spark.put("/game",this::joinGameHandler);
         Spark.delete ("/db", (req, res) -> {
             memoryUserDAO.clear ();
             memoryGameDAO.clear ();
@@ -53,7 +53,7 @@ public class Server {
         Spark.awaitStop ();
     }
 
-    private Object register (Request req, Response res) {
+    private Object registerHandler (Request req, Response res) {
         try {
             UserData userData = new Gson ().fromJson (req.body (), UserData.class);
             String username = userData.username ();
@@ -85,7 +85,7 @@ public class Server {
 
     }
 
-    private Object login (Request req, Response res) {
+    private Object loginHandler (Request req, Response res) {
         try {
             UserData userData = new Gson ().fromJson (req.body (), UserData.class);
             String username = userData.username ();
@@ -107,7 +107,7 @@ public class Server {
         }
     }
 
-    private Object logout (Request req, Response res) {
+    private Object logoutHandler (Request req, Response res) {
         try {
             String authToken = req.headers ("authorization");
 
@@ -127,7 +127,7 @@ public class Server {
         }
     }
 
-    private Object createGame (Request req, Response res) {
+    private Object createGameHandler (Request req, Response res) {
         try {
             String authToken = req.headers("Authorization");
 
@@ -172,7 +172,7 @@ public class Server {
         }
     }
 
-    private Object listGames(Request req, Response res) {
+    private Object listGamesHandler(Request req, Response res) {
         try {
             String authToken = req.headers("authorization");
 
@@ -198,7 +198,7 @@ public class Server {
         }
     }
 
-    private Object joinGame(Request req, Response res) {
+    private Object joinGameHandler(Request req, Response res) {
         try {
             String authToken = req.headers("Authorization");
             if (authToken == null || authToken.isEmpty()) {
