@@ -1,6 +1,5 @@
 package chess;
 
-import java.security.KeyStore;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;

@@ -10,7 +10,7 @@ import java.util.Arrays;
  */
 public class ChessBoard {
 
-    private ChessPiece[][] board = new ChessPiece[9][9];
+    private final ChessPiece[][] board = new ChessPiece[9][9];
 
 
     public ChessBoard () {
@@ -82,26 +82,8 @@ public class ChessBoard {
         addPiece (new ChessPosition (2, 6), new ChessPiece (ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN));
         addPiece (new ChessPosition (2, 7), new ChessPiece (ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN));
         addPiece (new ChessPosition (2, 8), new ChessPiece (ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN));
-//    printBoard ();
 
     }
-
-
-//    public void printBoard() {
-//        for (int row = 8; row >= 1; row--) {
-//            for (int col = 1; col <= 8; col++) {
-//                ChessPiece piece = board[row][col];
-//                if (piece != null) {
-//                    char pieceChar = piece.getPieceType().name().charAt(0);
-//                    char displayChar = (piece.getTeamColor() == ChessGame.TeamColor.WHITE) ? Character.toLowerCase(pieceChar) : pieceChar;
-//                    System.out.print("|" + displayChar);
-//                } else {
-//                    System.out.print("| ");
-//                }
-//            }
-//            System.out.println("|");
-//        }
-//    }
 
 
     @Override
