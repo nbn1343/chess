@@ -71,11 +71,9 @@ public class ChessPiece {
     }
 
     public Collection<ChessMove> bishopMove (ChessBoard board, ChessPosition myPosition) {
-        //A bishop moves diagonally across the board in either direction
         HashSet<ChessMove> bishopMoves = new HashSet<> ();
         int counter = 1;
 
-        //Checking upper right diagonal
         while (isValidPosition(myPosition.getRow () + counter, myPosition.getColumn () + counter)) {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + counter,myPosition.getColumn () + counter),null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () + counter,myPosition.getColumn () + counter));
@@ -91,60 +89,45 @@ public class ChessPiece {
             }
         }
         counter = 1;
-        //Checking lower right diagonal
         while (isValidPosition(myPosition.getRow () - counter, myPosition.getColumn () + counter)) {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - counter, myPosition.getColumn () + counter), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () - counter,myPosition.getColumn () + counter));
             ChessPiece currentPiece = board.getPiece (myPosition);
-////            System.out.println (nextPiece);
             if (nextPiece == null) {
-////                System.out.println ("====");
                 bishopMoves.add(moves);
-////                System.out.println (moves);
                 counter += 1;
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 bishopMoves.add(moves);
-////                System.out.println (moves);
                 break;
             } else {
                 break;
             }
         }
         counter = 1;
-        //Checking lower left diagonal
         while (isValidPosition(myPosition.getRow () - counter, myPosition.getColumn () - counter)) {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - counter, myPosition.getColumn () - counter), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () - counter,myPosition.getColumn () - counter));
             ChessPiece currentPiece = board.getPiece (myPosition);
-////            System.out.println (nextPiece);
             if (nextPiece == null) {
-//                System.out.println ("====");
                 bishopMoves.add(moves);
-//                System.out.println (moves);
                 counter += 1;
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 bishopMoves.add(moves);
-//                System.out.println (moves);
                 break;
             } else {
                 break;
             }
         }
         counter = 1;
-        //Checking upper left diagonal
         while (isValidPosition(myPosition.getRow () + counter, myPosition.getColumn () - counter)) {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + counter, myPosition.getColumn () - counter), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () + counter,myPosition.getColumn () - counter));
             ChessPiece currentPiece = board.getPiece (myPosition);
-//            System.out.println (nextPiece);
             if (nextPiece == null) {
-//                System.out.println ("====");
                 bishopMoves.add(moves);
-//                System.out.println (moves);
                 counter += 1;
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 bishopMoves.add(moves);
-//                System.out.println (moves);
                 break;
             } else {
                 break;
@@ -159,7 +142,6 @@ public class ChessPiece {
         HashSet<ChessMove> kingMoves = new HashSet<> ();
         int counter = 1;
         ChessPiece currentPiece = board.getPiece (myPosition);
-        //Up
         if (isValidPosition (myPosition.getRow () + counter,myPosition.getColumn ())) {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + counter, myPosition.getColumn ()), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () + counter,myPosition.getColumn ()));
@@ -168,7 +150,6 @@ public class ChessPiece {
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 kingMoves.add(moves);
             }
-        //Down
         } if (isValidPosition (myPosition.getRow () - counter,myPosition.getColumn ())) {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - counter,myPosition.getColumn ()),null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () - counter,myPosition.getColumn ()));
@@ -177,7 +158,6 @@ public class ChessPiece {
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 kingMoves.add(moves);
             }
-        //Right
         } if (isValidPosition (myPosition.getRow (),myPosition.getColumn () + counter)) {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow (), myPosition.getColumn () + counter), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow (),myPosition.getColumn () + counter));
@@ -186,7 +166,6 @@ public class ChessPiece {
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 kingMoves.add(moves);
             }
-        //Left
         } if (isValidPosition (myPosition.getRow (),myPosition.getColumn () - counter)) {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow (),myPosition.getColumn () - counter),null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow (),myPosition.getColumn () - counter));
@@ -195,7 +174,6 @@ public class ChessPiece {
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 kingMoves.add(moves);
             }
-        //Up 1 Right 1
         } if (isValidPosition (myPosition.getRow () + counter,myPosition.getColumn () + counter)) {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + counter, myPosition.getColumn () + counter), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () + counter,myPosition.getColumn () + counter));
@@ -204,7 +182,6 @@ public class ChessPiece {
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 kingMoves.add(moves);
             }
-        //Up 1 Left 1
         } if (isValidPosition (myPosition.getRow () + counter,myPosition.getColumn () - counter)) {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () + counter, myPosition.getColumn () - counter), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () + counter,myPosition.getColumn () - counter));
@@ -213,7 +190,6 @@ public class ChessPiece {
             } else if (nextPiece.pieceColor != currentPiece.pieceColor){
                 kingMoves.add(moves);
             }
-        //Down 1 Right 1
         } if (isValidPosition (myPosition.getRow () - counter,myPosition.getColumn () + counter)) {
             ChessMove moves = new ChessMove (myPosition, new ChessPosition (myPosition.getRow () - counter, myPosition.getColumn () + counter), null);
             ChessPiece nextPiece = board.getPiece (new ChessPosition (myPosition.getRow () - counter,myPosition.getColumn () + counter));
