@@ -219,7 +219,7 @@ public class Server {
             }
 
             if (playerColor == null || playerColor.isEmpty()) {
-                gameService.joinGame(authToken, gameID, null); // Pass null to indicate joining as an observer
+                gameService.joinGame(authToken, gameID, null);
             } else {
                 gameService.joinGame(authToken, gameID, playerColor);
             }

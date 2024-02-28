@@ -265,13 +265,9 @@ public class ChessGame {
      * @return the chessboard
      */
     public ChessBoard getBoard () {
-//        printBoard ();
         return board;
     }
 
-//    public void printBoard () {
-//        board.printBoard ();
-//    }
 
     @Override
     public boolean equals (Object o) {
