@@ -137,7 +137,7 @@ public class Server {
                 return new Gson().toJson(new ErrorMessage("Error: unauthorized"));
             }
 
-            if (!userService.isValidAuthToken(authToken)) {
+            if (userService.isValidAuthToken (authToken)) {
                 res.status(401); // Unauthorized
                 res.type("application/json");
                 return new Gson().toJson(new ErrorMessage("Error: authToken is invalid or expired"));
@@ -176,7 +176,7 @@ public class Server {
         try {
             String authToken = req.headers("authorization");
 
-            if (!userService.isValidAuthToken(authToken)) {
+            if (userService.isValidAuthToken (authToken)) {
                 res.status(401); // Unauthorized
                 res.type("application/json");
                 return new Gson().toJson(new ErrorMessage("Error: authToken is invalid or expired"));
@@ -205,7 +205,7 @@ public class Server {
                 res.status(401);
                 return new Gson().toJson(new ErrorMessage("Error: unauthorized"));
             }
-            if (!userService.isValidAuthToken(authToken)) {
+            if (userService.isValidAuthToken (authToken)) {
                 res.status(401);
                 res.type("application/json");
                 return new Gson().toJson(new ErrorMessage("Error: authToken is invalid or expired"));

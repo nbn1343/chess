@@ -18,24 +18,23 @@ public class GameService {
   }
 
   public GameData createGame(int gameId, String whiteUsername, String blackUsername, String gameName, Object game, String authToken) throws DataAccessException {
-    if (!isValidAuthToken(authToken)) {
+    if (isValidAuthToken (authToken)) {
       throw new DataAccessException("Error: unauthorized");
     }
 
     GameData newGame = new GameData(gameId,whiteUsername, blackUsername, gameName, game);
-    GameData updatedGame = gameDAO.createGame(newGame);
-    return updatedGame;
+    return gameDAO.createGame(newGame);
   }
 
   public Collection<GameData> listGames(String authToken) throws DataAccessException {
-    if (!isValidAuthToken(authToken)) {
+    if (isValidAuthToken (authToken)) {
       throw new DataAccessException("Error: unauthorized");
     }
     return gameDAO.getAllGames();
   }
 
   public void joinGame(String authToken, int gameID, String playerColor) throws DataAccessException {
-    if (!isValidAuthToken(authToken)) {
+    if (isValidAuthToken (authToken)) {
       throw new DataAccessException("Error: unauthorized");
     }
 
@@ -59,7 +58,7 @@ public class GameService {
     gameDAO.updateGame(gameData);
   }
   private boolean isValidAuthToken(String authToken) {
-    return authDAO.getAuth(authToken) != null;
+    return authDAO.getAuth (authToken) == null;
   }
 
 }

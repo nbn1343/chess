@@ -62,7 +62,7 @@ public class UserService {
 
   public boolean isValidAuthToken(String authToken) {
     AuthData authData = authDAO.getAuth(authToken);
-    return authData != null;
+    return authData == null;
   }
 
 }
