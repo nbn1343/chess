@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface UserDAOInterface {
 
-  void createUser(UserData user);
-  UserData getUser(String userName);
-  List<UserData> getAllUsers();
-  void clear();
+  void createUser(UserData user) throws DataAccessException;
+  UserData getUser(String userName) throws DataAccessException;
+  List<UserData> getAllUsers() throws DataAccessException;
+  void clear() throws DataAccessException;
 
 }

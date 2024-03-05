@@ -190,7 +190,6 @@ public class Server {
 
             res.status(200);
             res.type("application/json");
-            System.out.println (jsonResponse);
             return jsonResponse;
         } catch (Exception e) {
             res.status(500);

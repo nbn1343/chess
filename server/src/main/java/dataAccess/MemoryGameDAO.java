@@ -24,7 +24,7 @@ public class MemoryGameDAO implements GameDAOInterface {
   @Override
   public void updateGame(GameData game) {
     gameMap.put(game.gameID(), game);
-    System.out.println (gameMap.put(game.gameID(), game));
+
   }
 
   public HashSet<GameData> getAllGames() {
