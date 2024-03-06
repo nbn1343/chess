@@ -52,6 +52,7 @@ public class UserDAOTest {
   @Test
   void clear() throws DataAccessException {
     UserData user = new UserData("testUser", "password", "test@example.com");
+    userDAO.clear();
     userDAO.createUser(user);
 
     userDAO.clear();
