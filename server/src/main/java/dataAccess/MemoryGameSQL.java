@@ -2,6 +2,7 @@ package dataAccess;
 
 import model.GameData;
 
+import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +28,7 @@ public class MemoryGameSQL implements GameDAOInterface{
       stmt.setObject (5, game.game ());
       stmt.executeUpdate ();
     } catch (SQLException ex) {
-      throw new DataAccessException ("Error creating user");
+      throw new DataAccessException ("Error creating game");
     }
     return game;
   }
@@ -57,7 +58,19 @@ public class MemoryGameSQL implements GameDAOInterface{
   }
 
   @Override
-  public void updateGame (GameData game) {
+  public void updateGame (GameData game) throws DataAccessException {
+    String sql = "UPDATE games SET whiteUsername=?, blackUsername=?, gameName=?, game=? WHERE gameID=?";
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+      stmt.setString(1, game.whiteUsername());
+      stmt.setString(2, game.blackUsername());
+      stmt.setString(3, game.gameName());
+      stmt.setObject(4, game.game());
+      stmt.setInt(5, game.gameID());
+      stmt.executeUpdate();
+    } catch (SQLException ex) {
+      throw new DataAccessException("Error updating game");
+    }
 
   }
 

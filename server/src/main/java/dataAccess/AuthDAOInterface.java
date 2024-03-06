@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface AuthDAOInterface {
 
-  void createAuth(AuthData authData);
-  AuthData getAuth(String authToken);
+  void createAuth(AuthData authData) throws DataAccessException;
+  AuthData getAuth(String authToken) throws DataAccessException;
 
-  List<AuthData> getAllAuthData();
-  void deleteAuth(String authToken);
+  List<AuthData> getAllAuthData() throws DataAccessException;
+  void deleteAuth(String authToken) throws DataAccessException;
 
-  String getUsername(String authToken);
+  String getUsername(String authToken) throws DataAccessException;
 
-  void clear();
+  void clear() throws DataAccessException;
 }

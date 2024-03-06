@@ -60,7 +60,7 @@ public class UserService {
 
 
 
-  public boolean isValidAuthToken(String authToken) {
+  public boolean isValidAuthToken(String authToken) throws DataAccessException {
     AuthData authData = authDAO.getAuth(authToken);
     return authData == null;
   }

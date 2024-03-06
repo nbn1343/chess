@@ -57,7 +57,7 @@ public class GameService {
 
     gameDAO.updateGame(gameData);
   }
-  private boolean isValidAuthToken(String authToken) {
+  private boolean isValidAuthToken(String authToken) throws DataAccessException {
     return authDAO.getAuth (authToken) == null;
   }
 
