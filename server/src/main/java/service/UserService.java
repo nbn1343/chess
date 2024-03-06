@@ -5,6 +5,7 @@ import dataAccess.DataAccessException;
 import model.AuthData;
 import model.UserData;
 import dataAccess.UserDAOInterface;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.util.UUID;
 
@@ -41,7 +42,7 @@ public class UserService {
 
   public AuthData login(String username, String password) throws DataAccessException {
     UserData user = userDAO.getUser(username);
-    if (user == null || !user.password().equals(password)) {
+    if (user == null || !BCrypt.checkpw(password, user.password())) {
       throw new DataAccessException("Error: unauthorized");
     }
     String authToken = UUID.randomUUID().toString();

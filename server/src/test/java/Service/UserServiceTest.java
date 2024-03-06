@@ -12,14 +12,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserServiceTest {
 
-  private UserDAOInterface userDAO = new MemoryUserDAO ();
-  private AuthDAOInterface authDAO = new MemoryAuthDAO ();
+  private UserDAOInterface userDAO = new MemoryUserSQL ();
+  private AuthDAOInterface authDAO = new MemoryAuthSQL ();
   private UserService userService = new UserService (userDAO, authDAO);
 
+  UserServiceTest () throws DataAccessException {
+  }
+
   @BeforeEach
-  public void setUp () {
-    userDAO = new MemoryUserDAO ();
-    authDAO = new MemoryAuthDAO ();
+  public void setUp () throws DataAccessException {
+    userDAO = new MemoryUserSQL ();
+    authDAO = new MemoryAuthSQL ();
     userService = new UserService (userDAO, authDAO);
   }
 
@@ -38,6 +41,7 @@ class UserServiceTest {
 
   @Test
   void goodRegister() throws DataAccessException {
+    userService.clearData ();
     UserData user = new UserData("Username", "password", "test@email.com");
 
     AuthData returnData = userService.register("Username", "password", "test@email.com");
@@ -62,7 +66,8 @@ class UserServiceTest {
   @Test
   void usernameTaken() throws DataAccessException {
     userService.register("Username", "password", "test@email.com");
-    Assertions.assertThrows(DataAccessException.class, () -> userService.register("Username", "password", "test@email.com"), "Does not throw error");
+    Assertions.assertThrows(DataAccessException.class, () -> userService.register("Username", "password", "test@email.com"),
+            "Error: already taken");
   }
 
   @Test

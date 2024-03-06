@@ -11,6 +11,10 @@ import java.util.List;
 
 public class MemoryAuthSQL implements AuthDAOInterface {
 
+  public MemoryAuthSQL() throws DataAccessException {
+    configureDatabase();
+  }
+
   @Override
   public void createAuth(AuthData authData) throws DataAccessException {
     String sql = "INSERT INTO auth (authToken, username) VALUES (?, ?)";
@@ -82,12 +86,34 @@ public class MemoryAuthSQL implements AuthDAOInterface {
 
   @Override
   public void clear() throws DataAccessException {
-    String sql = "DELETE FROM auth";
+    String sql = "TRUNCATE TABLE auth";
     try (Connection conn = DatabaseManager.getConnection();
          PreparedStatement stmt = conn.prepareStatement(sql)) {
       stmt.executeUpdate();
     } catch (SQLException ex) {
       throw new DataAccessException("Error clearing authentication data");
+    }
+  }
+
+  private final String[] createStatements = {
+          """
+    CREATE TABLE IF NOT EXISTS auth (
+            authToken VARCHAR(255) PRIMARY KEY,
+            username VARCHAR(255) NOT NULL
+        )
+    """
+  };
+
+  private void configureDatabase() throws DataAccessException {
+    DatabaseManager.createDatabase();
+    try (var conn = DatabaseManager.getConnection()) {
+      for (var statement : createStatements) {
+        try (var preparedStatement = conn.prepareStatement(statement)) {
+          preparedStatement.executeUpdate();
+        }
+      }
+    } catch (SQLException ex) {
+      throw new DataAccessException("Unable to configure database: " + ex.getMessage());
     }
   }
 }

@@ -2,11 +2,7 @@ package dataAccess;
 
 import model.GameData;
 
-import javax.xml.crypto.Data;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -17,20 +13,29 @@ public class MemoryGameSQL implements GameDAOInterface{
   }
 
   @Override
-  public GameData createGame (GameData game) throws DataAccessException {
-    String sql = "INSERT INTO games (gameID, whiteUsername, blackUsername, gameName, game) VALUES(?,?,?,?,?) ";
-    try (Connection conn = DatabaseManager.getConnection ();
-         PreparedStatement stmt = conn.prepareStatement (sql)) {
-      stmt.setInt (1, game.gameID ());
-      stmt.setString (2, game.whiteUsername ());
-      stmt.setString (3, game.blackUsername ());
-      stmt.setString (4, game.gameName ());
-      stmt.setObject (5, game.game ());
-      stmt.executeUpdate ();
+  public GameData createGame(GameData game) throws DataAccessException {
+    String sql = "INSERT INTO games (whiteUsername, blackUsername, gameName, game) VALUES(?, ?, ?, ?)";
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+      stmt.setString(1, game.whiteUsername());
+      stmt.setString(2, game.blackUsername());
+      stmt.setString(3, game.gameName());
+      stmt.setObject(4, game.game());
+      int rowsAffected = stmt.executeUpdate();
+      if (rowsAffected == 0) {
+        throw new DataAccessException("Creating game failed, no rows affected.");
+      }
+      try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+        if (generatedKeys.next()) {
+          int generatedGameID = generatedKeys.getInt(1);
+          return new GameData(generatedGameID, game.whiteUsername(), game.blackUsername(), game.gameName(), game.game());
+        } else {
+          throw new DataAccessException("Creating game failed, no ID obtained.");
+        }
+      }
     } catch (SQLException ex) {
-      throw new DataAccessException ("Error creating game");
+      throw new DataAccessException("Error creating game");
     }
-    return game;
   }
 
   @Override
@@ -109,9 +114,9 @@ public class MemoryGameSQL implements GameDAOInterface{
   private final String[] createStatements = {
           """
     CREATE TABLE IF NOT EXISTS games (
-            gameID INT PRIMARY KEY,
-            whiteUsername VARCHAR(255) NOT NULL,
-            blackUsername VARCHAR(255) NOT NULL,
+            gameID INT AUTO_INCREMENT PRIMARY KEY,
+            whiteUsername VARCHAR(255),
+            blackUsername VARCHAR(255),
             gameName VARCHAR(255) NOT NULL,
             game BLOB
         )

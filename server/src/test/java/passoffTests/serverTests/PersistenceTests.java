@@ -63,7 +63,7 @@ public class PersistenceTests {
         //list games using the auth
         TestModels.TestListResult listResult = serverFacade.listGames(auth);
         Assertions.assertEquals(200, serverFacade.getStatusCode(), "Server response code was not 200 OK");
-        Assertions.assertEquals(1, listResult.games.length, "Missing game(s) in database after restart");
+         Assertions.assertEquals(1, listResult.games.length, "Missing game(s) in database after restart");
 
         TestModels.TestListResult.TestListEntry game1 = listResult.games[0];
         Assertions.assertEquals(game1.gameID, createResult.gameID);

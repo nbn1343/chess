@@ -15,13 +15,40 @@ import java.util.Collection;
 
 public class Server {
 
-    private final MemoryUserDAO memoryUserDAO = new MemoryUserDAO ();
-    private final MemoryGameDAO memoryGameDAO = new MemoryGameDAO ();
-    private final MemoryAuthDAO memoryAuthDAO = new MemoryAuthDAO ();
+    private final MemoryUserSQL memoryUserSQL;
 
-    UserService userService = new UserService (memoryUserDAO, memoryAuthDAO);
+    {
+        try {
+            memoryUserSQL = new MemoryUserSQL();
+        } catch (DataAccessException e) {
+            throw new RuntimeException (e);
+        }
+    }
 
-    GameService gameService = new GameService (memoryGameDAO, memoryAuthDAO);
+    private final MemoryGameSQL memoryGameSQL;
+
+    {
+        try {
+            memoryGameSQL = new MemoryGameSQL();
+        } catch (DataAccessException e) {
+            throw new RuntimeException (e);
+        }
+    }
+
+    private final MemoryAuthSQL memoryAuthSQL;
+
+    {
+        try {
+            memoryAuthSQL = new MemoryAuthSQL();
+        } catch (DataAccessException e) {
+            throw new RuntimeException (e);
+        }
+    }
+
+    UserService userService = new UserService(memoryUserSQL, memoryAuthSQL);
+
+    GameService gameService = new GameService(memoryGameSQL, memoryAuthSQL);
+
 
     public int run (int desiredPort) {
         Spark.port (desiredPort);
@@ -37,9 +64,9 @@ public class Server {
         Spark.post ("/game", this :: createGameHandler);
         Spark.put("/game",this::joinGameHandler);
         Spark.delete ("/db", (req, res) -> {
-            memoryUserDAO.clear ();
-            memoryGameDAO.clear ();
-            memoryAuthDAO.clear ();
+            memoryUserSQL.clear ();
+            memoryGameSQL.clear ();
+            memoryAuthSQL.clear ();
             res.status (200);
             return "{}";
         });
@@ -64,7 +91,7 @@ public class Server {
 
             res.status (200);
             res.type ("application/json");
-            memoryAuthDAO.getAllAuthData ();
+            memoryAuthSQL.getAllAuthData ();
             return new Gson ().toJson (authData);
         } catch (DataAccessException e) {
             String errorMessage = e.getMessage ();

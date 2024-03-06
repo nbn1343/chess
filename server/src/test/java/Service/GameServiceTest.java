@@ -2,9 +2,9 @@ package Service;
 
 import dataAccess.DataAccessException;
 import dataAccess.GameDAOInterface;
-import dataAccess.MemoryGameDAO;
+import dataAccess.MemoryGameSQL;
 import dataAccess.AuthDAOInterface;
-import dataAccess.MemoryAuthDAO;
+import dataAccess.MemoryAuthSQL;
 import model.AuthData;
 import model.GameData;
 import org.junit.jupiter.api.*;
@@ -21,9 +21,9 @@ class GameServiceTest {
   private GameService gameService;
 
   @BeforeEach
-  public void setUp () {
-    gameDAO = new MemoryGameDAO ();
-    authDAO = new MemoryAuthDAO ();
+  public void setUp () throws DataAccessException {
+    gameDAO = new MemoryGameSQL ();
+    authDAO = new MemoryAuthSQL ();
     gameService = new GameService (gameDAO, authDAO);
   }
 
