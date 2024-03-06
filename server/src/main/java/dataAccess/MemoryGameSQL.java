@@ -102,12 +102,20 @@ public class MemoryGameSQL implements GameDAOInterface{
 
   @Override
   public void clear() throws DataAccessException {
-    String sql = "DELETE FROM games";
+    String deleteSql = "DELETE FROM games";
     try (Connection conn = DatabaseManager.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
+         PreparedStatement stmt = conn.prepareStatement(deleteSql)) {
       stmt.executeUpdate();
     } catch (SQLException ex) {
-      throw new DataAccessException("Error clearing games");
+      throw new DataAccessException("Error clearing games table");
+    }
+
+    String resetSql = "ALTER TABLE games AUTO_INCREMENT = 1";
+    try (Connection conn = DatabaseManager.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(resetSql)) {
+      stmt.executeUpdate();
+    } catch (SQLException ex) {
+      throw new DataAccessException("Error resetting gameID auto-increment");
     }
   }
 
