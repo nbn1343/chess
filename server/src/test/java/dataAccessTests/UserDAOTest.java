@@ -6,6 +6,7 @@ import dataAccess.UserDAOInterface;
 import model.UserData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,13 +23,16 @@ public class UserDAOTest {
 
   @Test
   void createUserAndGetUser() throws DataAccessException {
+    userDAO.clear();
     UserData user = new UserData("testUser", "password", "test@example.com");
     userDAO.createUser(user);
 
     UserData retrievedUser = userDAO.getUser("testUser");
 
     assertNotNull(retrievedUser);
-    assertEquals(user, retrievedUser);
+    assertEquals(user.username(), retrievedUser.username());
+    assertEquals(user.email(), retrievedUser.email());
+    assertTrue(BCrypt.checkpw("password", retrievedUser.password()));
   }
 
   @Test

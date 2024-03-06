@@ -5,6 +5,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import dataAccess.UserDAOInterface;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class MemoryUserSQL implements UserDAOInterface {
 
@@ -16,9 +18,10 @@ public class MemoryUserSQL implements UserDAOInterface {
   public void createUser(UserData user) throws DataAccessException {
     String sql = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
     try (Connection conn = DatabaseManager.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
+    PreparedStatement stmt = conn.prepareStatement(sql)) {
       stmt.setString(1, user.username ());
-      stmt.setString(2, user.password ());
+      String hashedPassword = hashedPassword(user.password ());
+      stmt.setString (2, hashedPassword);
       stmt.setString(3, user.email ());
       stmt.executeUpdate();
     } catch (SQLException ex) {
@@ -97,5 +100,9 @@ public class MemoryUserSQL implements UserDAOInterface {
     } catch (SQLException ex) {
       throw new DataAccessException("Unable to configure database: " + ex.getMessage());
     }
+  }
+
+  private String hashedPassword(String password) {
+    return BCrypt.hashpw(password, BCrypt.gensalt());
   }
 }
