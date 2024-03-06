@@ -25,6 +25,8 @@ class GameServiceTest {
     gameDAO = new MemoryGameSQL ();
     authDAO = new MemoryAuthSQL ();
     gameService = new GameService (gameDAO, authDAO);
+    authDAO.clear ();
+    gameDAO.clear ();
   }
 
   @Test

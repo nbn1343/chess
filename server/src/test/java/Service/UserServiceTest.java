@@ -6,6 +6,7 @@ import model.UserData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import service.UserService;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,6 +25,8 @@ class UserServiceTest {
     userDAO = new MemoryUserSQL ();
     authDAO = new MemoryAuthSQL ();
     userService = new UserService (userDAO, authDAO);
+    authDAO.clear ();
+    userDAO.clear ();
   }
 
   @Test
@@ -41,18 +44,27 @@ class UserServiceTest {
 
   @Test
   void goodRegister() throws DataAccessException {
-    userService.clearData ();
-    UserData user = new UserData("Username", "password", "test@email.com");
+    userService.clearData();
+    String username = "Username";
+    String password = "password";
+    String email = "test@email.com";
 
-    AuthData returnData = userService.register("Username", "password", "test@email.com");
+    AuthData returnData = userService.register(username, password, email);
 
     assertNotNull(returnData, "No data returned after registration");
     assertNotNull(returnData.authToken(), "No authToken returned after registration");
     assertNotNull(returnData.username(), "No username returned after registration");
-    assertEquals(user.username(), returnData.username(), "Registered username does not match");
-    assertEquals(user, userDAO.getUser(user.username()), "UserData not added to UserDAO after registration");
+    assertEquals(username, returnData.username(), "Registered username does not match");
+
+    UserData storedUser = userDAO.getUser(username);
+    assertNotNull(storedUser, "UserData not added to UserDAO after registration");
+    assertEquals(username, storedUser.username(), "Stored username does not match");
+
+    assertTrue(BCrypt.checkpw(password, storedUser.password()), "Password is not hashed correctly");
+
     assertNotNull(authDAO.getAuth(returnData.authToken()), "AuthData not added to AuthDAO after registration");
   }
+
 
 
   @Test
