@@ -1,7 +1,6 @@
 package dataAccessTests;
 
 import dataAccess.DataAccessException;
-import dataAccess.GameDAOInterface;
 import dataAccess.MemoryGameSQL;
 import model.GameData;
 import org.junit.jupiter.api.BeforeEach;
@@ -101,6 +100,20 @@ class GameDAOTest {
     Collection<GameData> allGames = gameDAO.getAllGames();
 
     assertTrue(allGames.isEmpty(), "There should be no games retrieved when the database is empty");
+  }
+
+
+  @Test
+  void clearGames() throws DataAccessException {
+    GameData game1 = new GameData(1, "whiteUser1", "blackUser1", "Game1", null);
+    GameData game2 = new GameData(2, "whiteUser2", "blackUser2", "Game2", null);
+    gameDAO.createGame(game1);
+    gameDAO.createGame(game2);
+
+    gameDAO.clear();
+
+    Collection<GameData> allGames = gameDAO.getAllGames();
+    assertTrue(allGames.isEmpty(), "No games should be present in the database after clearing");
   }
 
 }
