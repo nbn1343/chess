@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="Completed AuthDAOTest. ALl tests work." />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Record" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;nbn1343&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="2b91cf16-72e6-4623-8fe0-5e1cd08f40e5" />
+        <option name="url" value="https://github.com/nbn1343/chess.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2ZP9VHLQjGHSyHX8qfVHnxNwmtW" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/nathan/OneDrive/BYU/winter-24/CS240/chess",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\nbn13\OneDrive\BYU\winter-24\CS240\chess\server\src\main\resources" />
+      <recent name="C:\Users\nbn13\OneDrive\BYU\winter-24\CS240\chess\server\src\test\java\passoffTests" />
+      <recent name="C:\Users\nbn13\OneDrive\BYU\winter-24\CS240\chess\server\src\test" />
+      <recent name="C:\Users\nbn13\OneDrive\BYU\winter-24\CS240\chess\server\src\main\java" />
+      <recent name="$PROJECT_DIR$/server/lib" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\nbn13\OneDrive\BYU\winter-24\CS240\chess\server\src\test\java\passoffTests\serverTests" />
+      <recent name="C:\Users\nbn13\OneDrive\BYU\winter-24\CS240\chess\server\src\main\java\dataAccess" />
+      <recent name="C:\Users\nbn13\OneDrive\BYU\winter-24\CS240\chess\server\src\main\resources" />
+      <recent name="C:\Users\nbn13\OneDrive\BYU\winter-24\CS240\chess\server\src\main\java" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.StandardAPITests">
+    <configuration name="AuthDAOTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dataAccessTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dataAccessTests" />
+      <option name="MAIN_CLASS_NAME" value="dataAccessTests.AuthDAOTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthDAOTest.clear" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dataAccessTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dataAccessTests" />
+      <option name="MAIN_CLASS_NAME" value="dataAccessTests.AuthDAOTest" />
+      <option name="METHOD_NAME" value="clear" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameDAOTest.clearGames" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dataAccessTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dataAccessTests" />
+      <option name="MAIN_CLASS_NAME" value="dataAccessTests.GameDAOTest" />
+      <option name="METHOD_NAME" value="clearGames" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PersistenceTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.PersistenceTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StandardAPITests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="passoffTests.serverTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="passoffTests.serverTests" />
+      <option name="MAIN_CLASS_NAME" value="passoffTests.serverTests.StandardAPITests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.StandardAPITests" />
+        <item itemvalue="JUnit.PersistenceTests" />
+        <item itemvalue="JUnit.GameDAOTest.clearGames" />
+        <item itemvalue="JUnit.AuthDAOTest.clear" />
+        <item itemvalue="JUnit.AuthDAOTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e2127a23-f6c5-4361-9314-19f7fd19bf87" name="Changes" comment="" />
+      <created>1702312869025</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1702312869025</updated>
+      <workItem from="1710786008979" duration="90000" />
+    </task>
+    <task id="LOCAL-00001" summary="fix(tests) removed extra credit tests">
+      <option name="closed" value="true" />
+      <created>1702313258344</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1702313258344</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Implemented ChessPosition by adding rowPosition and colPosition.">
+      <option name="closed" value="true" />
+      <created>1705449422336</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1705449422336</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Implemented ChessPosition by adding rowPosition and colPosition. Beginning implemetation of bishopMoves">
+      <option name="closed" value="true" />
+      <created>1705602783272</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1705602783272</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Generated override for equals, hashCode, and toString. Completed movement for Bishop.">
+      <option name="closed" value="true" />
+      <created>1705608843833</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1705608843833</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Completed capturing of pieces for bishop.">
+      <option name="closed" value="true" />
+      <created>1705613159218</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1705613159218</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Completed kingMoves">
+      <option name="closed" value="true" />
+      <created>1705615028159</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1705615028159</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Fixed out of index error. Changed array to [9][9] for now.">
+      <option name="closed" value="true" />
+      <created>1705616837486</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1705616837486</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Completed pawn movement. Need to complete promotion of pawn.">
+      <option name="closed" value="true" />
+      <created>1705620429552</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1705620429552</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Finished pawn movement and pawn promotion">
+      <option name="closed" value="true" />
+      <created>1705633170881</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1705633170881</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Completed rook and queen functionality">
+      <option name="closed" value="true" />
+      <created>1705635127404</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1705635127404</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Completed chessboard functionality to have board populate">
+      <option name="closed" value="true" />
+      <created>1705638137787</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1705638137787</updated>
+    </task>
+    <task id="LOCAL-00012" summary="makeValidMoves() passed. Working on next testcase.">
+      <option name="closed" value="true" />
+      <created>1707106492075</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1707106492075</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Working through invalidMoves test case. Working on stalemate,checkmate, and check">
+      <option name="closed" value="true" />
+      <created>1707186222926</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1707186222926</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Finished invalidMoves test case. Working on next test cases.">
+      <option name="closed" value="true" />
+      <created>1707244622984</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1707244622984</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Pawn promotion test cases finished. Working on checkmate and stalemate now.">
+      <option name="closed" value="true" />
+      <created>1707245334708</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1707245334708</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Completed checkmate. Working on stalemate">
+      <option name="closed" value="true" />
+      <created>1707253624302</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1707253624302</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Completed stalemate. Similar logic to checkmate. Fixed a logical error in checkmate. Working on full game checkmate.">
+      <option name="closed" value="true" />
+      <created>1707254061853</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1707254061853</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Completed full game checkmate. Fixed some logical flaws.">
+      <option name="closed" value="true" />
+      <created>1707254878894</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1707254878894</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Completed all test cases.">
+      <option name="closed" value="true" />
+      <created>1707260341867</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1707260341867</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Fixing bugs that were causing the autograder to have issues.">
+      <option name="closed" value="true" />
+      <created>1707262166939</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1707262166939</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Fixing bugs that were causing the autograder to have issues.">
+      <option name="closed" value="true" />
+      <created>1707262309684</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1707262309684</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Adding the starter code and getting ready to begin phase 3">
+      <option name="closed" value="true" />
+      <created>1708483550439</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1708483550439</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Created dataaccess interfaces and memories">
+      <option name="closed" value="true" />
+      <created>1708819137918</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1708819137918</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Working on clear">
+      <option name="closed" value="true" />
+      <created>1708830858581</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1708830858581</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Further changes">
+      <option name="closed" value="true" />
+      <created>1708913845430</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1708913845430</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Resgister success">
+      <option name="closed" value="true" />
+      <created>1708967636707</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1708967636707</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Made register test cases for UserService and completed login with login test cases.">
+      <option name="closed" value="true" />
+      <created>1708979375194</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1708979375194</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Made test cases for logout and clear. Completed more.">
+      <option name="closed" value="true" />
+      <created>1708981259152</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1708981259152</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Completed createGame with proper tests for GameService">
+      <option name="closed" value="true" />
+      <created>1708989138974</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1708989138974</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Worked on joingame and listgames. Working on implementing test cases and passing further tests">
+      <option name="closed" value="true" />
+      <created>1708992369004</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1708992369004</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Worked on joingame and listgames. Working on implementing test cases and passing further tests">
+      <option name="closed" value="true" />
+      <created>1708992376104</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1708992376104</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Successfully completed all StandardAPI tests. Cleaned up code. Working on GameServiceTest">
+      <option name="closed" value="true" />
+      <created>1709056844347</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1709056844347</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Completed final GameServiceTests">
+      <option name="closed" value="true" />
+      <created>1709066072160</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1709066072160</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Cleaning up code for code check">
+      <option name="closed" value="true" />
+      <created>1709067308747</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1709067308747</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Cleaning up code for code check">
+      <option name="closed" value="true" />
+      <created>1709084928181</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1709084928181</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Cleaning up code for code check">
+      <option name="closed" value="true" />
+      <created>1709086947392</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1709086947392</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Cleaning up code for code check">
+      <option name="closed" value="true" />
+      <created>1709087106771</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1709087106772</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Cleaning up code for code check">
+      <option name="closed" value="true" />
+      <created>1709087556727</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1709087556727</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Cleaning up code for code check">
+      <option name="closed" value="true" />
+      <created>1709088157559</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1709088157559</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Cleaning up code for code check">
+      <option name="closed" value="true" />
+      <created>1709088597481</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1709088597481</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Adding starter code for phase 4">
+      <option name="closed" value="true" />
+      <created>1709573451128</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1709573451128</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Adding starter code for phase 4">
+      <option name="closed" value="true" />
+      <created>1709573471892</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1709573471892</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Worked through UserSQL. Added testing. Almost working">
+      <option name="closed" value="true" />
+      <created>1709682428416</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1709682428416</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Fixed clear test. Needed to call clear() before executing test.">
+      <option name="closed" value="true" />
+      <created>1709690248237</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1709690248237</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Created MemoryGameSQL with test of creating game. Also added hashing to creating user">
+      <option name="closed" value="true" />
+      <created>1709694016760</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1709694016760</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Created authSQL and testfile. No tests written yet. Need to implement SQL in server rather than DAO.">
+      <option name="closed" value="true" />
+      <created>1709696722685</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1709696722685</updated>
+    </task>
+    <task id="LOCAL-00047" summary="GameServiceTest and UserServiceTest pass. Working on DAO tests.">
+      <option name="closed" value="true" />
+      <created>1709753647835</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1709753647836</updated>
+    </task>
+    <task id="LOCAL-00048" summary="StandardAPItest works and Persistence test works. Completed GameDAOTest and UserDAOTest. Working on AuthDAOTest">
+      <option name="closed" value="true" />
+      <created>1709762988994</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1709762988994</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Completed AuthDAOTest. ALl tests work.">
+      <option name="closed" value="true" />
+      <created>1709763288307</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1709763288307</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Completed checkmate. Working on stalemate" />
+    <MESSAGE value="Completed stalemate. Similar logic to checkmate. Fixed a logical error in checkmate. Working on full game checkmate." />
+    <MESSAGE value="Completed full game checkmate. Fixed some logical flaws." />
+    <MESSAGE value="Completed all test cases." />
+    <MESSAGE value="Fixing bugs that were causing the autograder to have issues." />
+    <MESSAGE value="Adding the starter code and getting ready to begin phase 3" />
+    <MESSAGE value="Created dataaccess interfaces and memories" />
+    <MESSAGE value="Working on clear" />
+    <MESSAGE value="Further changes" />
+    <MESSAGE value="Resgister success" />
+    <MESSAGE value="Made register test cases for UserService and completed login with login test cases." />
+    <MESSAGE value="Made test cases for logout and clear. Completed more." />
+    <MESSAGE value="Completed createGame with proper tests for GameService" />
+    <MESSAGE value="Worked on joingame and listgames. Working on implementing test cases and passing further tests" />
+    <MESSAGE value="Successfully completed all StandardAPI tests. Cleaned up code. Working on GameServiceTest" />
+    <MESSAGE value="Completed final GameServiceTests" />
+    <MESSAGE value="Cleaning up code for code check" />
+    <MESSAGE value="Adding starter code for phase 4" />
+    <MESSAGE value="Worked through UserSQL. Added testing. Almost working" />
+    <MESSAGE value="Fixed clear test. Needed to call clear() before executing test." />
+    <MESSAGE value="Created MemoryGameSQL with test of creating game. Also added hashing to creating user" />
+    <MESSAGE value="Created authSQL and testfile. No tests written yet. Need to implement SQL in server rather than DAO." />
+    <MESSAGE value="GameServiceTest and UserServiceTest pass. Working on DAO tests." />
+    <MESSAGE value="StandardAPItest works and Persistence test works. Completed GameDAOTest and UserDAOTest. Working on AuthDAOTest" />
+    <MESSAGE value="Completed AuthDAOTest. ALl tests work." />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed AuthDAOTest. ALl tests work." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/server/Server.java</url>
+          <line>158</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/server/src/main/java/server/Server.java</url>
+          <line>180</line>
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="JUnit">
+        <watch expression="teamColor" language="JAVA" />
+      </configuration>
+      <inline-watch fileUrl="file://$PROJECT_DIR$/server/src/main/java/server/Server.java" line="158">
+        <watch expression="authToken" language="JAVA" />
+      </inline-watch>
+    </watches-manager>
+  </component>
+</project>
