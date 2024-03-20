@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import model. *;
 public class ServerFacade {
 
@@ -95,8 +96,107 @@ public class ServerFacade {
       URL url = new URL(serverUrl + "/session");
       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
       conn.setRequestMethod("DELETE");
-      conn.setRequestProperty("Authorization", "Bearer " + authToken);
+      conn.setRequestProperty("Authorization", authToken);
       conn.connect();
+
+      int responseCode = conn.getResponseCode();
+      conn.disconnect();
+      return responseCode == HttpURLConnection.HTTP_OK;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+  public boolean createGame(String gameName) {
+    try {
+      URL url = new URL(serverUrl + "/game");
+      HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+      conn.setRequestMethod("POST");
+      conn.setRequestProperty("Content-Type", "application/json");
+      conn.setRequestProperty("Authorization", authToken);
+      conn.setDoOutput(true);
+
+      JsonObject gameData = new JsonObject();
+      gameData.addProperty("gameName", gameName);
+
+      OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
+      writer.write(gameData.toString());
+      writer.flush();
+
+      int responseCode = conn.getResponseCode();
+      conn.disconnect();
+      return responseCode == HttpURLConnection.HTTP_OK;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+  public String listGames() {
+    try {
+      URL url = new URL(serverUrl + "/game");
+      HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+      conn.setRequestMethod("GET");
+      conn.setRequestProperty("Authorization",authToken);
+      conn.connect();
+
+      BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+      StringBuilder response = new StringBuilder();
+      String line;
+      while ((line = reader.readLine()) != null) {
+        response.append(line);
+      }
+      reader.close();
+
+      conn.disconnect();
+      return response.toString();
+    } catch (Exception e) {
+      e.printStackTrace();
+      return "Failed to retrieve games list.";
+    }
+  }
+
+  public boolean joinGame(String gameName) {
+    try {
+      URL url = new URL(serverUrl + "/game/join");
+      HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+      conn.setRequestMethod("POST");
+      conn.setRequestProperty("Content-Type", "application/json");
+      conn.setRequestProperty("Authorization", authToken);
+      conn.setDoOutput(true);
+
+      JsonObject requestData = new JsonObject();
+      requestData.addProperty("gameName", gameName);
+
+      OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
+      writer.write(requestData.toString());
+      writer.flush();
+
+      int responseCode = conn.getResponseCode();
+      conn.disconnect();
+      return responseCode == HttpURLConnection.HTTP_OK;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+  public boolean joinGameObserver(String gameName) {
+    try {
+      URL url = new URL(serverUrl + "/game/join/observer");
+      HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+      conn.setRequestMethod("POST");
+      conn.setRequestProperty("Content-Type", "application/json");
+      conn.setRequestProperty("Authorization", authToken);
+      conn.setDoOutput(true);
+
+      JsonObject requestData = new JsonObject();
+      requestData.addProperty("gameName", gameName);
+
+      OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
+      writer.write(requestData.toString());
+      writer.flush();
 
       int responseCode = conn.getResponseCode();
       conn.disconnect();

@@ -2,6 +2,7 @@ package ui;
 
 import model.AuthData;
 import java.util.Scanner;
+import ui.EscapeSequences;
 
 public class ServerCommand {
   private static final String SERVER_URL = "http://localhost:8080";
@@ -12,52 +13,83 @@ public class ServerCommand {
   public static void start() {
     while (true) {
       if (!loggedIn) {
-        displayWelcomeMessage();
+        displayWelcomeMessage ();
+        String command = scanner.nextLine ().trim ().toLowerCase ();
+        switch (command) {
+          case "help":
+            displayHelp ();
+            break;
+          case "login":
+            login ();
+            break;
+          case "register":
+            register ();
+            break;
+          case "quit":
+            System.out.println ("Exiting Chess client. Goodbye!");
+            System.exit (0);
+            break;
+          default:
+            System.out.println ("Invalid command. Please try again.");
+        }
       } else {
-        displayPostLoginOptions();
-      }
-      String command = scanner.nextLine().trim().toLowerCase();
-      switch (command) {
-        case "help":
-          displayHelp();
-          break;
-        case "quit":
-          System.out.println("Exiting Chess client. Goodbye!");
-          System.exit(0);
-          break;
-        case "login":
-          login();
-          break;
-        case "register":
-          register();
-          break;
-        case "logout":
-          logout();
-          break;
-        default:
-          System.out.println("Invalid command. Please try again.");
+        displayPostLoginOptions ();
+        String command = scanner.nextLine ().trim ().toLowerCase ();
+        switch (command) {
+          case "help":
+            displayHelp ();
+            break;
+          case "logout":
+            logout();
+            break;
+          case "create game":
+            System.out.print("Enter game name: ");
+            String gameName = scanner.nextLine().trim();
+            createGame(gameName);
+            break;
+          case "list games":
+            listGames();
+            break;
+          case "join game":
+            System.out.print("Enter game name: ");
+            gameName = scanner.nextLine().trim();
+            joinGame(gameName);
+            break;
+          case "watch game":
+            System.out.print("Enter game name: ");
+            gameName = scanner.nextLine().trim();
+            joinGameObserver(gameName);
+            // Handle joining as an observer
+            break;
+          default:
+            System.out.println("Invalid command. Please try again.");
+        }
       }
     }
   }
 
   private static void displayWelcomeMessage() {
-    System.out.println("Welcome to 240 Chess Client! Type help to get started.");
-    System.out.print("Enter Command: ");
+    System.out.println(EscapeSequences.SET_TEXT_COLOR_RED + EscapeSequences.WHITE_QUEEN + "Welcome to 240 Chess! Type help to get started." + EscapeSequences.WHITE_QUEEN);
+    System.out.print(EscapeSequences.SET_TEXT_COLOR_WHITE + "Enter Command: ");
   }
 
   private static void displayHelp() {
     System.out.println("Available commands:");
     System.out.println("  - Help: Displays available commands.");
-    System.out.println("  - Quit: Exits the program.");
     System.out.println("  - Login: Log in to the Chess server.");
     System.out.println("  - Register: Register a new account and log in.");
+    System.out.println("  - Quit: Exits the program.");
   }
 
   private static void displayPostLoginOptions() {
     System.out.println("Postlogin Commands:");
     System.out.println("  - Help");
-    System.out.println("  - Quit");
     System.out.println("  - Logout");
+    System.out.println("  - Create Game");
+    System.out.println("  - List Games");
+    System.out.println("  - Join Game");
+    System.out.println("  - Watch Game");
+    System.out.println("  - Quit");
     System.out.print("Enter command: ");
   }
 
@@ -94,11 +126,48 @@ public class ServerCommand {
   }
 
   private static void logout() {
-    if (serverFacade.logout()) {
+    boolean logoutSuccess = serverFacade.logout();
+    if (logoutSuccess) {
       loggedIn = false;
       System.out.println("Logout successful.");
     } else {
       System.out.println("Logout failed.");
+    }
+  }
+
+  private static void createGame(String gameName) {
+    // Call the corresponding method in ServerFacade
+    boolean createSuccess = serverFacade.createGame(gameName);
+    if (createSuccess) {
+      System.out.println("Game created successfully.");
+    } else {
+      System.out.println("Failed to create the game.");
+    }
+  }
+
+  private static void listGames() {
+    // Call the corresponding method in ServerFacade
+    String gamesList = serverFacade.listGames();
+    System.out.println("Games available:\n" + gamesList);
+  }
+
+  private static void joinGame(String gameName) {
+    // Call the corresponding method in ServerFacade
+    boolean joinSuccess = serverFacade.joinGame(gameName);
+    if (joinSuccess) {
+      System.out.println("Joined the game successfully.");
+    } else {
+      System.out.println("Failed to join the game.");
+    }
+  }
+
+  private static void joinGameObserver(String gameName) {
+    // Call the corresponding method in ServerFacade
+    boolean joinSuccess = serverFacade.joinGameObserver(gameName);
+    if (joinSuccess) {
+      System.out.println("Joined the game as observer successfully.");
+    } else {
+      System.out.println("Failed to join the game as observer.");
     }
   }
 }
