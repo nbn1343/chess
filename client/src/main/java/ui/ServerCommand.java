@@ -50,20 +50,25 @@ public class ServerCommand {
             listGames();
             break;
           case "join game":
-            System.out.print("Enter game number: ");
+            System.out.print("Enter game ID number: ");
             int gameNumber = Integer.parseInt(scanner.nextLine().trim());
             System.out.print("Enter desired color (white or black): ");
             String color = scanner.nextLine().trim().toLowerCase();
             if (color.equals("white") || color.equals("black")) {
               joinGame(gameNumber, color);
+              System.out.print ("Type quit to leave:");
+              command = scanner.nextLine ().trim ().toLowerCase ();
+              switch (command) {
+                case "quit":
+              }
             } else {
               System.out.println("Invalid color. Please enter 'white' or 'black'.");
             }
             break;
           case "watch game":
-            System.out.print("Enter game name: ");
-            gameName = scanner.nextLine().trim();
-            joinGameObserver(gameName);
+            System.out.print("Enter game ID number: ");
+            gameNumber = Integer.parseInt(scanner.nextLine().trim());
+            joinGameObserver(gameNumber);
             // Handle joining as an observer
             break;
           default:
@@ -166,9 +171,9 @@ public class ServerCommand {
     }
   }
 
-  private static void joinGameObserver(String gameName) {
+  private static void joinGameObserver(int gameID) {
     // Call the corresponding method in ServerFacade
-    boolean joinSuccess = serverFacade.joinGameObserver(gameName);
+    boolean joinSuccess = serverFacade.joinGameObserver(gameID);
     if (joinSuccess) {
       System.out.println("Joined the game as observer successfully.");
     } else {

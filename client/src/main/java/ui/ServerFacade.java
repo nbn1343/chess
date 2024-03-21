@@ -162,6 +162,7 @@ public class ServerFacade {
   }
 
   public boolean joinGame(int gameID, String playerColor) {
+    String opponentColor = (playerColor.equalsIgnoreCase("white")) ? "black" : "white";
     try {
       URL url = new URL("http://localhost:" + serverUrl + "/game");
       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -183,7 +184,10 @@ public class ServerFacade {
       if (responseCode == HttpURLConnection.HTTP_OK) {
         System.out.println("Joined the game successfully.");
         // Print the chessboard after joining the game
+        printChessboard (opponentColor);
+        System.out.println (EscapeSequences.SET_BG_COLOR_LIGHT_GREY);
         printChessboard(playerColor);
+        System.out.print (EscapeSequences.SET_BG_COLOR_DARK_GREY);
         return true;
       } else {
         System.out.println("Failed to join the game.");
@@ -195,7 +199,7 @@ public class ServerFacade {
     }
   }
 
-  public boolean joinGameObserver(String gameName) {
+  public boolean joinGameObserver(int gameID) {
     try {
       URL url = new URL("http://localhost:" + serverUrl + "/game");
       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -205,7 +209,8 @@ public class ServerFacade {
       conn.setDoOutput(true);
 
       JsonObject requestData = new JsonObject();
-      requestData.addProperty("gameName", gameName);
+      requestData.addProperty("gameID", gameID);
+      requestData.addProperty("observeOnly", true); // Set the observeOnly flag
 
       OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
       writer.write(requestData.toString());

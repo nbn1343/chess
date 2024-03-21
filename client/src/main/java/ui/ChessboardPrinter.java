@@ -7,7 +7,7 @@ public class ChessboardPrinter {
 
     String[] initialRow = {"R", "N", "B", "Q", "K", "B", "N", "R"};
     for (int i = 0; i < 8; i++) {
-      if (playerColor.equalsIgnoreCase("black")) {
+      if (playerColor.equalsIgnoreCase("white")) {
         chessboard[0][i] = "b" + initialRow[i];
         chessboard[1][i] = "bp";
         chessboard[6][i] = "wp";
@@ -24,7 +24,7 @@ public class ChessboardPrinter {
     System.out.print(EscapeSequences.moveCursorToLocation(1, 1));
     System.out.print(EscapeSequences.SET_TEXT_COLOR_WHITE);
 
-    if (playerColor.equalsIgnoreCase("black")) {
+    if (playerColor.equalsIgnoreCase("white")) {
       System.out.print("    a  b  c  d  e  f  g  h     \n");
     } else {
       System.out.println("    h  g  f  e  d  c  b  a     ");
@@ -32,7 +32,7 @@ public class ChessboardPrinter {
 
     for (int i = 0; i < 8; i++) {
       System.out.print(EscapeSequences.SET_TEXT_COLOR_WHITE);
-      if (playerColor.equalsIgnoreCase("black")) {
+      if (playerColor.equalsIgnoreCase("white")) {
         System.out.print(" " + (i + 1) + " ");
       } else {
         System.out.print(" " + (8 - i) + " ");
@@ -62,14 +62,14 @@ public class ChessboardPrinter {
       }
 
       System.out.print(EscapeSequences.SET_TEXT_COLOR_WHITE);
-      if (playerColor.equalsIgnoreCase("black")) {
+      if (playerColor.equalsIgnoreCase("white")) {
         System.out.println(" " + (i + 1) + " ");
       } else {
         System.out.println(" " + (8 - i) + " ");
       }
     }
 
-    if (playerColor.equalsIgnoreCase("black")) {
+    if (playerColor.equalsIgnoreCase("white")) {
       System.out.println("    a  b  c  d  e  f  g  h     ");
     } else {
       System.out.println("    h  g  f  e  d  c  b  a     ");
