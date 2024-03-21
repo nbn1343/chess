@@ -8,6 +8,9 @@ import java.net.URL;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import model. *;
+import ui.*;
+
+import static ui.ChessboardPrinter.printChessboard;
 
 public class ServerFacade {
 
@@ -15,14 +18,14 @@ public class ServerFacade {
   private String authToken;
 
 
-  public ServerFacade(String serverUrl) {
-    this.serverUrl = serverUrl;
+  public ServerFacade(int serverUrl) {
+    this.serverUrl = String.valueOf (serverUrl);
     authToken = null;
   }
 
   public AuthData login(String username, String password) {
     try {
-      URL url = new URL(serverUrl + "/session");
+      URL url = new URL("http://localhost:" + serverUrl + "/session");
       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
       conn.setRequestMethod("POST");
       conn.setRequestProperty("Content-Type", "application/json");
@@ -58,7 +61,7 @@ public class ServerFacade {
 
   public AuthData register(String username, String password, String email) {
     try {
-      URL url = new URL(serverUrl + "/user");
+      URL url = new URL("http://localhost:" + serverUrl + "/user");
       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
       conn.setRequestMethod("POST");
       conn.setRequestProperty("Content-Type", "application/json");
@@ -94,7 +97,7 @@ public class ServerFacade {
 
   public boolean logout() {
     try {
-      URL url = new URL(serverUrl + "/session");
+      URL url = new URL("http://localhost:" + serverUrl + "/session");
       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
       conn.setRequestMethod("DELETE");
       conn.setRequestProperty("Authorization", authToken);
@@ -111,7 +114,7 @@ public class ServerFacade {
 
   public boolean createGame(String gameName) {
     try {
-      URL url = new URL(serverUrl + "/game");
+      URL url = new URL("http://localhost:" + serverUrl + "/game");
       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
       conn.setRequestMethod("POST");
       conn.setRequestProperty("Content-Type", "application/json");
@@ -136,7 +139,7 @@ public class ServerFacade {
 
   public String listGames() {
     try {
-      URL url = new URL(serverUrl + "/game");
+      URL url = new URL("http://localhost:" + serverUrl + "/game");
       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
       conn.setRequestMethod("GET");
       conn.setRequestProperty("Authorization",authToken);
@@ -160,7 +163,7 @@ public class ServerFacade {
 
   public boolean joinGame(int gameID, String playerColor) {
     try {
-      URL url = new URL(serverUrl + "/game");
+      URL url = new URL("http://localhost:" + serverUrl + "/game");
       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
       conn.setRequestMethod("PUT");
       conn.setRequestProperty("Content-Type", "application/json");
@@ -177,7 +180,15 @@ public class ServerFacade {
 
       int responseCode = conn.getResponseCode();
       conn.disconnect();
-      return responseCode == HttpURLConnection.HTTP_OK;
+      if (responseCode == HttpURLConnection.HTTP_OK) {
+        System.out.println("Joined the game successfully.");
+        // Print the chessboard after joining the game
+        printChessboard(playerColor);
+        return true;
+      } else {
+        System.out.println("Failed to join the game.");
+        return false;
+      }
     } catch (Exception e) {
       e.printStackTrace();
       return false;
@@ -186,7 +197,7 @@ public class ServerFacade {
 
   public boolean joinGameObserver(String gameName) {
     try {
-      URL url = new URL(serverUrl + "/game");
+      URL url = new URL("http://localhost:" + serverUrl + "/game");
       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
       conn.setRequestMethod("PUT");
       conn.setRequestProperty("Content-Type", "application/json");

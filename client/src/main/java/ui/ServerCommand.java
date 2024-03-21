@@ -4,7 +4,7 @@ import model.AuthData;
 import java.util.Scanner;
 
 public class ServerCommand {
-  private static final String SERVER_URL = "http://localhost:8080";
+  private static final int SERVER_URL = 8080;
   private static boolean loggedIn = false;
   private static final Scanner scanner = new Scanner(System.in);
   private static final ServerFacade serverFacade = new ServerFacade(SERVER_URL);

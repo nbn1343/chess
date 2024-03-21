@@ -8,8 +8,6 @@ import server.Server;
 import ui.ServerFacade;
 import dataAccess.*;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 
 public class ServerFacadeTests {
 
@@ -20,100 +18,82 @@ public class ServerFacadeTests {
     private static MemoryGameSQL gameDAO;
 
 
-
     @BeforeAll
-    public static void init() throws DataAccessException {
-        server = new Server();
-        var port = server.run(8080);
-        serverFacade = new ServerFacade("http://localhost:8080");
+    public static void init () throws DataAccessException {
+        server = new Server ();
+        var port = server.run (0);
+        serverFacade = new ServerFacade (port);
         userDAO = new MemoryUserSQL ();
-        authDAO = new MemoryAuthSQL();
+        authDAO = new MemoryAuthSQL ();
         gameDAO = new MemoryGameSQL ();
-        userDAO.clear();
+        userDAO.clear ();
         authDAO.clear ();
-        gameDAO.clear();
-        System.out.println("Started test HTTP server on " + port);
+        gameDAO.clear ();
+        System.out.println ("Started test HTTP server on " + port);
     }
 
     @AfterAll
-    static void stopServer() {
-        server.stop();
+    static void stopServer () {
+        server.stop ();
     }
 
 
     @Test
-    public void sampleTest() {
-        assertTrue(true);
+    public void sampleTest () {
+        Assertions.assertTrue (true);
     }
 
     @Test
-    public void testCreateGame() {
+    public void testCreateGame () {
         String username = "testUser";
         String password = "testPassword";
         String email = "test@example.com";
 
-        serverFacade.register(username, password, email);
-        serverFacade.login (username,password);
+        serverFacade.register (username, password, email);
+        serverFacade.login (username, password);
         // Test creating a game
-        boolean createSuccess = serverFacade.createGame("TestGame");
-        assertTrue(createSuccess, "Failed to create a game.");
+        boolean createSuccess = serverFacade.createGame ("TestGame");
+        Assertions.assertTrue (createSuccess, "Failed to create a game.");
     }
 
     @Test
-    public void testListGames() {
+    public void testListGames () {
         String username = "testUser";
         String password = "testPassword";
         String email = "test@example.com";
 
-        serverFacade.register(username, password, email);
-        serverFacade.login (username,password);
+        serverFacade.register (username, password, email);
+        serverFacade.login (username, password);
         // Test creating a game
-        serverFacade.createGame("TestGame");
+        serverFacade.createGame ("TestGame");
         // Test listing available games
-        String gamesList = serverFacade.listGames();
-        System.out.println("Games List:\n" + gamesList);
-        Assertions.assertNotNull(gamesList, "Failed to retrieve games list.");
+        String gamesList = serverFacade.listGames ();
+        System.out.println ("Games List:\n" + gamesList);
+        Assertions.assertNotNull (gamesList, "Failed to retrieve games list.");
     }
 
     @Test
-    public void testRegister() {
+    public void testRegister () {
         // Test registering a new account
         String username = "testUser";
         String password = "testPassword";
         String email = "test@example.com";
 
-        AuthData authData = serverFacade.register(username, password, email);
-        Assertions.assertNotNull(authData, "Failed to register a new account.");
+        AuthData authData = serverFacade.register (username, password, email);
+        Assertions.assertNotNull (authData, "Failed to register a new account.");
     }
 
     @Test
-    public void testLogin() {
+    public void testLogin () {
         // Test logging in after registration
         String username = "testUser";
         String password = "testPassword";
         String email = "test@example.com";
 
-        serverFacade.register(username, password, email);
-        AuthData authData = serverFacade.login (username,password);
-        Assertions.assertNotNull(authData, "Failed to login.");
-
+        serverFacade.register (username, password, email);
+        AuthData authData = serverFacade.login (username, password);
+        Assertions.assertNotNull (authData, "Failed to login.");
 
 
     }
-
-//    @Test
-//    public void testJoinGame() {
-//        String username = "testUser";
-//        String password = "testPassword";
-//        String email = "test@example.com";
-//
-//        serverFacade.register(username, password, email);
-//        serverFacade.login (username,password);
-//        serverFacade.createGame("TestGame");
-//        boolean joinSuccess = serverFacade.joinGame(1);
-//        assertTrue(joinSuccess, "Failed to join the game.");
-//
-//
-//    }
-
 }
