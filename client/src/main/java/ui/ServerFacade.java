@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
 import model. *;
 import ui.*;
 
-import static ui.ChessboardPrinter.printChessboard;
+import static ui.ChessboardPrinter.*;
 
 public class ServerFacade {
 
@@ -182,7 +182,7 @@ public class ServerFacade {
       int responseCode = conn.getResponseCode();
       conn.disconnect();
       if (responseCode == HttpURLConnection.HTTP_OK) {
-        System.out.println("Joined the game successfully.");
+        System.out.println("Joined game" + " " + gameID + " " + "successfully.");
         // Print the chessboard after joining the game
         printChessboard (opponentColor);
         System.out.println (EscapeSequences.SET_BG_COLOR_LIGHT_GREY);
@@ -218,7 +218,16 @@ public class ServerFacade {
 
       int responseCode = conn.getResponseCode();
       conn.disconnect();
-      return responseCode == HttpURLConnection.HTTP_OK;
+      if (responseCode == HttpURLConnection.HTTP_OK) {
+        System.out.println("Joined the game" + gameID + "successfully.");
+        // Print the chessboard after joining the game
+        printObservedChessboard ();
+        System.out.print (EscapeSequences.SET_BG_COLOR_DARK_GREY);
+        return true;
+      } else {
+        System.out.println("Failed to join the game.");
+        return false;
+      }
     } catch (Exception e) {
       e.printStackTrace();
       return false;

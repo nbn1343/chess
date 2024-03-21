@@ -69,7 +69,6 @@ public class ServerCommand {
             System.out.print("Enter game ID number: ");
             gameNumber = Integer.parseInt(scanner.nextLine().trim());
             joinGameObserver(gameNumber);
-            // Handle joining as an observer
             break;
           default:
             System.out.println("Invalid command. Please try again.");
@@ -99,7 +98,6 @@ public class ServerCommand {
     System.out.println("  - List Games");
     System.out.println("  - Join Game");
     System.out.println("  - Watch Game");
-    System.out.println("  - Quit");
     System.out.print("Enter command: ");
   }
 

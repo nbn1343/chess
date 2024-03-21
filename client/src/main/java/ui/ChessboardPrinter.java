@@ -75,12 +75,54 @@ public class ChessboardPrinter {
       System.out.println("    h  g  f  e  d  c  b  a     ");
     }
   }
+  public static void printObservedChessboard() {
+    String[][] chessboard = new String[8][8];
 
-  public static void main(String[] args) {
+    String[] initialRow = {"R", "N", "B", "Q", "K", "B", "N", "R"};
+    for (int i = 0; i < 8; i++) {
+      chessboard[0][i] = "b" + initialRow[i];
+      chessboard[1][i] = "bp";
+      chessboard[6][i] = "wp";
+      chessboard[7][i] = "w" + initialRow[i];
+    }
 
-    printChessboard("black");
-    System.out.println (EscapeSequences.SET_BG_COLOR_LIGHT_GREY);
-    printChessboard("white");
+    System.out.print(EscapeSequences.SET_BG_COLOR_BLACK);
+    System.out.print(EscapeSequences.moveCursorToLocation(1, 1));
+    System.out.print(EscapeSequences.SET_TEXT_COLOR_WHITE);
+    System.out.print("    a  b  c  d  e  f  g  h     \n");
+
+    for (int i = 0; i < 8; i++) {
+      System.out.print(EscapeSequences.SET_TEXT_COLOR_WHITE);
+      System.out.print(" " + (i + 1) + " ");
+
+      for (int j = 0; j < 8; j++) {
+        if ((i + j) % 2 == 0) {
+          System.out.print(EscapeSequences.SET_BG_COLOR_LIGHT_GREY);
+        } else {
+          System.out.print(EscapeSequences.SET_BG_COLOR_DARK_GREY);
+        }
+
+        String square = chessboard[i][j];
+        if (square != null) {
+          if (square.startsWith("w")) {
+            System.out.print(EscapeSequences.SET_TEXT_COLOR_WHITE);
+          } else {
+            System.out.print(EscapeSequences.SET_TEXT_COLOR_BLACK);
+          }
+          System.out.print(" " + square.substring(1) + " ");
+        } else {
+          System.out.print("   ");
+        }
+
+        System.out.print(EscapeSequences.RESET_BG_COLOR);
+        System.out.print(EscapeSequences.RESET_TEXT_COLOR);
+      }
+
+      System.out.print(EscapeSequences.SET_TEXT_COLOR_WHITE);
+      System.out.println(" " + (i + 1));
+    }
+
+    System.out.println("    a  b  c  d  e  f  g  h     ");
   }
 }
 

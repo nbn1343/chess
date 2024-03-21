@@ -39,8 +39,14 @@ public class ServerFacadeTests {
 
 
     @Test
-    public void sampleTest () {
-        Assertions.assertTrue (true);
+    public void testRegister () {
+        // Test registering a new account
+        String username = "bob";
+        String password = "testPassword";
+        String email = "test@example.com";
+
+        AuthData authData = serverFacade.register (username, password, email);
+        Assertions.assertNotNull (authData, "Failed to register a new account.");
     }
 
     @Test
@@ -73,17 +79,6 @@ public class ServerFacadeTests {
     }
 
     @Test
-    public void testRegister () {
-        // Test registering a new account
-        String username = "testUser";
-        String password = "testPassword";
-        String email = "test@example.com";
-
-        AuthData authData = serverFacade.register (username, password, email);
-        Assertions.assertNotNull (authData, "Failed to register a new account.");
-    }
-
-    @Test
     public void testLogin () {
         // Test logging in after registration
         String username = "testUser";
@@ -96,4 +91,51 @@ public class ServerFacadeTests {
 
 
     }
+
+    @Test
+    public void testJoinGame() {
+        String username = "testUser";
+        String password = "testPassword";
+        String email = "test@example.com";
+
+        serverFacade.register (username, password, email);
+        serverFacade.login (username, password);
+        serverFacade.createGame ("TestGame");
+        boolean joinGameSuccess = serverFacade.joinGame (1,"white");
+        Assertions.assertTrue (joinGameSuccess, "Failed to join a game.");
+
+    }
+
+    @Test
+    public void testJoinSpecificGame() {
+        String username = "testUser";
+        String password = "testPassword";
+        String email = "test@example.com";
+
+        serverFacade.register (username, password, email);
+        serverFacade.login (username, password);
+        serverFacade.createGame ("TestGame");
+        serverFacade.createGame ("TestGame1");
+        serverFacade.createGame ("TestGame2");
+        serverFacade.createGame ("JoinGame");
+        boolean joinGameSuccess = serverFacade.joinGame (4,"white");
+        Assertions.assertTrue (joinGameSuccess, "Failed to join a game.");
+
+    }
+
+    @Test
+    public void testObserveGame() {
+        String username = "testUser";
+        String password = "testPassword";
+        String email = "test@example.com";
+
+        serverFacade.register (username, password, email);
+        serverFacade.login (username, password);
+        serverFacade.createGame ("TestGame");
+        boolean joinGameSuccess = serverFacade.joinGameObserver (1);
+        Assertions.assertTrue (joinGameSuccess, "Failed to join a game.");
+
+    }
+
+
 }
