@@ -78,7 +78,7 @@ public class ServerCommand {
   }
 
   private static void displayWelcomeMessage() {
-    System.out.println(EscapeSequences.SET_TEXT_COLOR_RED + EscapeSequences.WHITE_QUEEN + "Welcome to 240 Chess! Type help to get started." + EscapeSequences.WHITE_QUEEN);
+    System.out.println(EscapeSequences.SET_TEXT_BOLD + EscapeSequences.SET_TEXT_COLOR_MAGENTA + EscapeSequences.WHITE_QUEEN + "Welcome to 240 Chess! Type help to get started." + EscapeSequences.WHITE_QUEEN);
     System.out.print(EscapeSequences.SET_TEXT_COLOR_WHITE + "Enter Command: ");
   }
 
@@ -136,6 +136,7 @@ public class ServerCommand {
     AuthData authData = serverFacade.register(username, password, email);
 
     if (authData != null) {
+      loggedIn = true;
       System.out.println("Registration successful.");
     } else {
       System.out.println("Registration failed.");

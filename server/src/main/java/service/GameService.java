@@ -44,14 +44,14 @@ public class GameService {
       throw new DataAccessException("Error: bad request");
     }
 
-    if (("WHITE".equals(playerColor) && gameData.whiteUsername() != null) ||
-            ("BLACK".equals(playerColor) && gameData.blackUsername() != null)) {
+    if (("white".equals(playerColor) && gameData.whiteUsername() != null) ||
+            ("black".equals(playerColor) && gameData.blackUsername() != null)) {
       throw new DataAccessException("Error: already taken");
     }
 
-    if ("WHITE".equals(playerColor)) {
+    if ("white".equals(playerColor)) {
       gameData = new GameData(gameID, authDAO.getUsername(authToken), gameData.blackUsername(), gameData.gameName(), gameData.game());
-    } else if ("BLACK".equals(playerColor)) {
+    } else if ("black".equals(playerColor)) {
       gameData = new GameData(gameID, gameData.whiteUsername(), authDAO.getUsername(authToken), gameData.gameName(), gameData.game());
     }
 

@@ -1,5 +1,6 @@
 package server;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dataAccess.*;
@@ -203,17 +204,26 @@ public class Server {
         try {
             String authToken = req.headers("authorization");
 
-            if (userService.isValidAuthToken (authToken)) {
+            if (userService.isValidAuthToken(authToken)) {
                 res.status(401); // Unauthorized
                 res.type("application/json");
                 return new Gson().toJson(new ErrorMessage("Error: authToken is invalid or expired"));
             }
 
-            Collection<GameData> games = gameService.listGames (authToken);
+            Collection<GameData> games = gameService.listGames(authToken);
 
+            JsonArray gamesArray = new JsonArray();
+            for (GameData game : games) {
+                JsonObject gameJson = new JsonObject();
+                gameJson.addProperty("gameID", game.gameID ());
+                gameJson.addProperty("gameName", game.gameName ());
+                gameJson.addProperty("whiteUsername", game.whiteUsername ());
+                gameJson.addProperty("blackUsername", game.blackUsername ());
+                gamesArray.add(gameJson);
+            }
 
             JsonObject jsonResponse = new JsonObject();
-            jsonResponse.add("games", new Gson().toJsonTree(games));
+            jsonResponse.add("games", gamesArray);
 
             res.status(200);
             res.type("application/json");
@@ -252,7 +262,9 @@ public class Server {
 
             res.status(200);
             res.type("application/json");
-            return "{}";
+            JsonObject jsonResponse = new JsonObject();
+            jsonResponse.addProperty("whitePlayer", playerColor);
+            return jsonResponse.toString();
         } catch (DataAccessException e) {
             String errorMessage = e.getMessage ();
             if (errorMessage.contains ("already taken")) {
