@@ -36,7 +36,7 @@ public class ServerCommand {
         String command = scanner.nextLine ().trim ().toLowerCase ();
         switch (command) {
           case "help":
-            displayHelp ();
+            displayHelpPost ();
             break;
           case "logout":
             logout();
@@ -88,6 +88,15 @@ public class ServerCommand {
     System.out.println("  - Login: Log in to the Chess server.");
     System.out.println("  - Register: Register a new account and log in.");
     System.out.println("  - Quit: Exits the program.");
+  }
+
+  private static void displayHelpPost() {
+    System.out.println("Available commands:");
+    System.out.println("  - Logout: Log out of the game.");
+    System.out.println("  - Create Game: Create a game to play.");
+    System.out.println("  - List Game: List created games.");
+    System.out.println("  - Join Game: Join a game to play.");
+    System.out.println("  - Watch Game: Watch a game.");
   }
 
   private static void displayPostLoginOptions() {
