@@ -2,13 +2,12 @@ package ui;
 
 import model.AuthData;
 import java.util.Scanner;
-import ui.EscapeSequences;
 
 public class ServerCommand {
   private static final String SERVER_URL = "http://localhost:8080";
   private static boolean loggedIn = false;
-  private static Scanner scanner = new Scanner(System.in);
-  private static ServerFacade serverFacade = new ServerFacade(SERVER_URL);
+  private static final Scanner scanner = new Scanner(System.in);
+  private static final ServerFacade serverFacade = new ServerFacade(SERVER_URL);
 
   public static void start() {
     while (true) {
@@ -51,9 +50,15 @@ public class ServerCommand {
             listGames();
             break;
           case "join game":
-            System.out.print("Enter game name: ");
-            gameName = scanner.nextLine().trim();
-            joinGame(gameName);
+            System.out.print("Enter game number: ");
+            int gameNumber = Integer.parseInt(scanner.nextLine().trim());
+            System.out.print("Enter desired color (white or black): ");
+            String color = scanner.nextLine().trim().toLowerCase();
+            if (color.equals("white") || color.equals("black")) {
+              joinGame(gameNumber, color);
+            } else {
+              System.out.println("Invalid color. Please enter 'white' or 'black'.");
+            }
             break;
           case "watch game":
             System.out.print("Enter game name: ");
@@ -151,9 +156,9 @@ public class ServerCommand {
     System.out.println("Games available:\n" + gamesList);
   }
 
-  private static void joinGame(String gameName) {
+  private static void joinGame(int gameNumber, String gameColor) {
     // Call the corresponding method in ServerFacade
-    boolean joinSuccess = serverFacade.joinGame(gameName);
+    boolean joinSuccess = serverFacade.joinGame(gameNumber,gameColor);
     if (joinSuccess) {
       System.out.println("Joined the game successfully.");
     } else {

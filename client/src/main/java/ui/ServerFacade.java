@@ -8,6 +8,7 @@ import java.net.URL;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import model. *;
+
 public class ServerFacade {
 
   private final String serverUrl;
@@ -157,17 +158,18 @@ public class ServerFacade {
     }
   }
 
-  public boolean joinGame(String gameName) {
+  public boolean joinGame(int gameID, String playerColor) {
     try {
-      URL url = new URL(serverUrl + "/game/join");
+      URL url = new URL(serverUrl + "/game");
       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-      conn.setRequestMethod("POST");
+      conn.setRequestMethod("PUT");
       conn.setRequestProperty("Content-Type", "application/json");
       conn.setRequestProperty("Authorization", authToken);
       conn.setDoOutput(true);
 
       JsonObject requestData = new JsonObject();
-      requestData.addProperty("gameName", gameName);
+      requestData.addProperty("gameID", gameID);
+      requestData.addProperty("playerColor", playerColor);
 
       OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
       writer.write(requestData.toString());
@@ -184,9 +186,9 @@ public class ServerFacade {
 
   public boolean joinGameObserver(String gameName) {
     try {
-      URL url = new URL(serverUrl + "/game/join/observer");
+      URL url = new URL(serverUrl + "/game");
       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-      conn.setRequestMethod("POST");
+      conn.setRequestMethod("PUT");
       conn.setRequestProperty("Content-Type", "application/json");
       conn.setRequestProperty("Authorization", authToken);
       conn.setDoOutput(true);
