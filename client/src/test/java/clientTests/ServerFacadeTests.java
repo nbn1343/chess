@@ -50,6 +50,21 @@ public class ServerFacadeTests {
     }
 
     @Test
+    public void testRegisterBad() {
+        // Test registering with existing username/email
+        String username = "existingUser";
+        String password = "testPassword";
+        String email = "existing@example.com";
+
+        serverFacade.register(username, password, email);
+
+        AuthData authData = serverFacade.register(username, password, email);
+
+        Assertions.assertNull(authData, "Registration with existing username/email should fail.");
+    }
+
+
+    @Test
     public void testCreateGame () {
         String username = "testUser";
         String password = "testPassword";
@@ -63,6 +78,18 @@ public class ServerFacadeTests {
     }
 
     @Test
+    public void testCreateGameBad() {
+        // Test creating a game without logging in
+        serverFacade.logout ();
+        String gameName = "TestGame";
+
+        boolean createSuccess = serverFacade.createGame(gameName);
+
+        Assertions.assertFalse(createSuccess, "Game creation without logging in should fail.");
+    }
+
+
+    @Test
     public void testListGames () {
         String username = "testUser";
         String password = "testPassword";
@@ -72,11 +99,22 @@ public class ServerFacadeTests {
         serverFacade.login (username, password);
         // Test creating a game
         serverFacade.createGame ("TestGame");
-        // Test listing available games
         String gamesList = serverFacade.listGames ();
         System.out.println ("Games List:\n" + gamesList);
         Assertions.assertNotNull (gamesList, "Failed to retrieve games list.");
     }
+
+    @Test
+    public void testListGamesBad() {
+        // Test listing games without logging in
+        serverFacade.logout ();
+
+        String gamesList = serverFacade.listGames();
+
+        String expectedMessage = "Failed to retrieve games list.";
+        Assertions.assertEquals(expectedMessage,gamesList, "Listing games without logging in should fail.");
+    }
+
 
     @Test
     public void testLogin () {
@@ -88,9 +126,19 @@ public class ServerFacadeTests {
         serverFacade.register (username, password, email);
         AuthData authData = serverFacade.login (username, password);
         Assertions.assertNotNull (authData, "Failed to login.");
-
-
     }
+
+    @Test
+    public void testLoginBad() {
+        // Test logging in with incorrect credentials
+        String username = "testUser";
+        String password = "wrongPassword";
+
+        AuthData authData = serverFacade.login(username, password);
+
+        Assertions.assertNull(authData, "Login with incorrect credentials should fail.");
+    }
+
 
     @Test
     public void testJoinGame() {
@@ -105,6 +153,23 @@ public class ServerFacadeTests {
         Assertions.assertTrue (joinGameSuccess, "Failed to join a game.");
 
     }
+
+    @Test
+    public void testJoinGameBad() {
+        // Test joining a non-existent game
+        String username = "testUser";
+        String password = "testPassword";
+        String email = "test@example.com";
+
+        serverFacade.register(username, password, email);
+        serverFacade.login(username, password);
+        serverFacade.createGame("TestGame");
+
+        boolean joinGameSuccess = serverFacade.joinGame(999, "white");
+
+        Assertions.assertFalse(joinGameSuccess, "Joining a non-existent game should fail.");
+    }
+
 
     @Test
     public void testJoinSpecificGame() {
@@ -136,6 +201,23 @@ public class ServerFacadeTests {
         Assertions.assertTrue (joinGameSuccess, "Failed to join a game.");
 
     }
+
+    @Test
+    public void testObserveGameBad() {
+        // Test observing a non-existent game
+        String username = "testUser";
+        String password = "testPassword";
+        String email = "test@example.com";
+
+        serverFacade.register(username, password, email);
+        serverFacade.login(username, password);
+        serverFacade.createGame("TestGame");
+
+        boolean observeGameSuccess = serverFacade.joinGameObserver(999);
+
+        Assertions.assertFalse(observeGameSuccess, "Observing a non-existent game should fail.");
+    }
+
 
 
 }
